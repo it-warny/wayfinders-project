@@ -12,12 +12,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'uma-chave-padrao-caso-nao-encontre')
 
-# ESTE É O BLOCO DE CÓDIGO INTELIGENTE PARA O BANCO DE DADOS
+# ESTE É O BLOCO DE CÓDIGO CORRIGIDO
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
-    # Usa o banco de dados do Render (PostgreSQL do Neon) se a variável de ambiente existir
-    # A linha .replace() é uma precaução para garantir compatibilidade
-    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    # AGORA USAMOS A URL DIRETAMENTE, SEM O .replace()
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 else:
     # Continua usando o banco de dados local (SQLite) se não estiver no Render
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'wayfinders.db')
