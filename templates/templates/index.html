@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo ao WayFinders</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body class="public-page-body">
+
+<div class="container text-center d-flex flex-column justify-content-center" style="height: 100vh;">
+
+    <div class="logo-container">
+        <div class="logo-item">
+            <div class="logo-image-wrapper">
+                <img src="{{ url_for('static', filename='caricaturas/warny.jpg') }}" alt="Caricatura Warny" class="logo-image">
+            </div>
+            <h1 class="logo-main-text">Way</h1>
+            <p class="logo-sub-text">Warny</p>
+        </div>
+        <div class="logo-item">
+            <div class="logo-image-wrapper">
+                <img src="{{ url_for('static', filename='caricaturas/fernanda.jpg') }}" alt="Caricatura Fernanda" class="logo-image">
+            </div>
+            <h1 class="logo-main-text">Finders</h1>
+            <p class="logo-sub-text">Fernanda</p>
+        </div>
+        <div class="logo-item">
+            <div class="logo-image-wrapper">
+                <img src="{{ url_for('static', filename='caricaturas/gabriel.jpg') }}" alt="Caricatura Gabriel" class="logo-image">
+            </div>
+            <h1 class="logo-main-text">on a Great</h1>
+            <p class="logo-sub-text">Gabriel</p>
+        </div>
+        <div class="logo-item">
+            <div class="logo-image-wrapper">
+                <img src="{{ url_for('static', filename='caricaturas/ayanne.jpg') }}" alt="Caricatura Ayanne" class="logo-image">
+            </div>
+            <h1 class="logo-main-text">Adventure</h1>
+            <p class="logo-sub-text">Ayanne</p>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <p class="lead">Um diário digital para celebrar nossa jornada de amizade.</p>
+        <a href="{{ url_for('login') }}" class="btn btn-info btn-lg">Acessar a Trilha</a>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

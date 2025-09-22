@@ -7,7 +7,7 @@ from datetime import datetime
 import cloudinary
 import cloudinary.uploader
 
-# --- CONFIGURAÇÃO (sem mudanças) ---
+# --- CONFIGURAÇÃO ---
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'uma-chave-padrao-caso-nao-encontre')
@@ -22,18 +22,14 @@ cloudinary.config(
     api_secret=os.environ.get('CLOUDINARY_API_SECRET')
 )
 
-
-# --- MODELOS (sem mudanças) ---
+# --- MODELOS ---
 class User(db.Model, UserMixin):
-    # ... (código igual)
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(120), nullable=False)
 
-
 class Memory(db.Model):
-    # ... (código igual)
     __tablename__ = "memories"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
@@ -42,21 +38,18 @@ class Memory(db.Model):
     media_url = db.Column(db.String(300), nullable=False)
     media_type = db.Column(db.String(10), nullable=False)
 
-
-# --- CALLBACK (sem mudanças) ---
+# --- CALLBACK ---
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
-
 # --- ROTAS ---
-# ... (rotas de index, login, logout, timeline, add_memory sem mudanças)
+# ROTA PRINCIPAL ATUALIZADA
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    # Agora, a rota principal renderiza nossa nova página de boas-vindas
+    return render_template('index.html')
 
-
-# ...(outras rotas)...
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -70,20 +63,17 @@ def login():
             flash('Usuário ou senha inválidos. Tente novamente.')
     return render_template('login.html')
 
-
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
-
 @app.route('/timeline')
 @login_required
 def timeline():
     memories = Memory.query.order_by(Memory.event_date.desc()).all()
     return render_template('timeline.html', memories=memories)
-
 
 @app.route('/add-memory', methods=['POST'])
 @login_required
@@ -99,53 +89,37 @@ def add_memory():
     media_url = upload_result['secure_url']
     event_date = datetime.strptime(event_date_str, '%Y-%m-%d').date()
     media_type = upload_result['resource_type']
-    new_memory = Memory(title=title, event_date=event_date, description=description, media_url=media_url,
-                        media_type=media_type)
+    new_memory = Memory(title=title, event_date=event_date, description=description, media_url=media_url, media_type=media_type)
     db.session.add(new_memory)
     db.session.commit()
     return redirect(url_for('timeline'))
 
-
-# NOVA ROTA PARA EXCLUIR
 @app.route('/delete-memory/<int:memory_id>', methods=['POST'])
 @login_required
 def delete_memory(memory_id):
-    # Busca a memória pelo ID ou retorna um erro 404 se não encontrar
     memory = db.get_or_404(Memory, memory_id)
-    # Deleta do banco de dados
     db.session.delete(memory)
     db.session.commit()
-    # Envia uma mensagem de sucesso (opcional)
     flash('Lembrança apagada com sucesso!')
     return redirect(url_for('timeline'))
 
-
-# NOVA ROTA PARA EDITAR (com GET e POST)
 @app.route('/edit-memory/<int:memory_id>', methods=['GET', 'POST'])
 @login_required
 def edit_memory(memory_id):
     memory = db.get_or_404(Memory, memory_id)
-    # Se o formulário foi enviado (POST)
     if request.method == 'POST':
-        # Atualiza os campos do objeto 'memory' com os dados do formulário
         memory.title = request.form['title']
         memory.event_date = datetime.strptime(request.form['event_date'], '%Y-%m-%d').date()
         memory.description = request.form['description']
-
-        # Verifica se um novo arquivo foi enviado
         new_media_file = request.files.get('media_file')
         if new_media_file:
             upload_result = cloudinary.uploader.upload(new_media_file)
             memory.media_url = upload_result['secure_url']
             memory.media_type = upload_result['resource_type']
-
         db.session.commit()
         flash('Lembrança atualizada com sucesso!')
         return redirect(url_for('timeline'))
-
-    # Se for apenas para carregar a página (GET), renderiza o template de edição
     return render_template('edit_memory.html', memory=memory)
-
 
 # --- EXECUÇÃO ---
 if __name__ == '__main__':
