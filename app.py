@@ -11,7 +11,17 @@ import cloudinary.uploader
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'uma-chave-padrao-caso-nao-encontre')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'wayfinders.db')
+
+# ESTE É O BLOCO DE CÓDIGO INTELIGENTE PARA O BANCO DE DADOS
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
+    # Usa o banco de dados do Render (PostgreSQL do Neon) se a variável de ambiente existir
+    # A linha .replace() é uma precaução para garantir compatibilidade
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+else:
+    # Continua usando o banco de dados local (SQLite) se não estiver no Render
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'wayfinders.db')
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
@@ -22,7 +32,7 @@ cloudinary.config(
     api_secret=os.environ.get('CLOUDINARY_API_SECRET')
 )
 
-# --- MODELOS ---
+# --- MODELOS (sem mudanças) ---
 class User(db.Model, UserMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
@@ -38,16 +48,16 @@ class Memory(db.Model):
     media_url = db.Column(db.String(300), nullable=False)
     media_type = db.Column(db.String(10), nullable=False)
 
-# --- CALLBACK ---
+
+# --- CALLBACK (sem mudanças) ---
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
-# --- ROTAS ---
-# ROTA PRINCIPAL ATUALIZADA
+# --- ROTAS (sem mudanças) ---
+# ... (todas as suas rotas de login, logout, timeline, add, edit, delete continuam aqui)
 @app.route('/')
 def index():
-    # Agora, a rota principal renderiza nossa nova página de boas-vindas
     return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -121,8 +131,10 @@ def edit_memory(memory_id):
         return redirect(url_for('timeline'))
     return render_template('edit_memory.html', memory=memory)
 
+
 # --- EXECUÇÃO ---
 if __name__ == '__main__':
+    # Este with app.app_context() só vai rodar e criar tabelas no seu BD local
     with app.app_context():
         db.create_all()
     app.run(debug=True)
