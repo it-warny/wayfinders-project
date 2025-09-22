@@ -9,12 +9,12 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ url_for('timeline') }}">WayFinders</a>
+        <a class="navbar-brand" href="{{ url_for('timeline') }}">WayFinders on a Great Adventure</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 {% if current_user.is_authenticated %}
                 <li class="nav-item">
-                    <button type="button" class="btn btn-info mr-2" data-toggle="modal" data-target="#addMemoryModal">
+                    <button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#addMemoryModal">
                         Adicionar Lembrança
                     </button>
                 </li>
@@ -25,6 +25,7 @@
             </ul>
         </div>
     </nav>
+
     <main class="container mt-4">
         {% block content %}{% endblock %}
     </main>

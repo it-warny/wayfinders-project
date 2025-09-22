@@ -1,5 +1,4 @@
-/* M6_P1_App web com Flask e base de dados SQLite3_v2.docx.pdf (Customizado) */
-
+/* Estilos gerais */
 body {
     background: #000000;
     background: -webkit-linear-gradient(to right, #434343, #000000);
@@ -7,14 +6,59 @@ body {
     color: #f8f9fa;
 }
 
-.titulo {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
+.public-page-body {
+    height: 100%;
+    margin: 0;
 }
 
-.tarefa-feita {
-    text-decoration: line-through;
-    color: #888;
+/* Estilos do Logo */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logo-item {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+}
+
+.logo-main-text {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #00bc8c;
+    margin: 0;
+}
+
+.logo-sub-text {
+    font-size: 1.5rem;
+    color: #adb5bd;
+    margin-top: -10px;
+}
+
+.logo-image-wrapper {
+    position: absolute;
+    top: -160px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.logo-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #00bc8c;
+    object-fit: cover;
+}
+
+.logo-item:hover .logo-image-wrapper {
+    opacity: 1;
 }
 
 /*
@@ -44,6 +88,7 @@ CSS DA TIMELINE
     padding: 20px 40px;
     position: relative;
     width: 50%;
+    box-sizing: border-box; /* Garante que o padding não afete a largura total */
 }
 
 .timeline-dot {
@@ -51,79 +96,27 @@ CSS DA TIMELINE
     position: absolute;
     width: 20px;
     height: 20px;
-    background-color: #00bc8c;
+    background-color: #78C2AD; /* Nova cor para o pino */
     border: 3px solid #303030;
     top: 35px;
     border-radius: 50%;
     z-index: 1;
 }
 
+/* Itens da Esquerda */
+.timeline-item.left {
+    left: 0;
+}
+
 .timeline-item.left .timeline-dot {
     right: -10px;
 }
 
+/* Itens da Direita */
+.timeline-item.right {
+    left: 50%; /* Essencial para empurrar o item para a metade direita */
+}
+
 .timeline-item.right .timeline-dot {
     left: -10px;
-}
-
-/*
-=========================
-CSS DA PÁGINA INICIAL E LOGO
-=========================
-*/
-
-.public-page-body {
-    /* Garante que o fundo cubra toda a tela */
-    height: 100%;
-    margin: 0;
-}
-
-.logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas menores */
-    gap: 20px; /* Espaçamento entre os itens do logo */
-}
-
-.logo-item {
-    position: relative; /* Necessário para posicionar a imagem da caricatura */
-    cursor: pointer;
-    text-align: center;
-}
-
-.logo-main-text {
-    font-size: 4rem;
-    font-weight: bold;
-    color: #00bc8c; /* Cor de destaque */
-    margin: 0;
-}
-
-.logo-sub-text {
-    font-size: 1.5rem;
-    color: #adb5bd; /* Um cinza mais claro */
-    margin-top: -10px;
-}
-
-.logo-image-wrapper {
-    position: absolute;
-    top: -160px; /* Posiciona a caricatura acima do texto */
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0; /* Começa invisível */
-    transition: opacity 0.3s ease-in-out; /* Efeito suave de fade */
-    pointer-events: none; /* Evita que a imagem atrapalhe o clique */
-}
-
-.logo-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%; /* Deixa a imagem redonda */
-    border: 3px solid #00bc8c;
-    object-fit: cover; /* Garante que a imagem preencha o círculo sem distorcer */
-}
-
-/* A mágica acontece aqui: quando o mouse passa por cima do '.logo-item'... */
-.logo-item:hover .logo-image-wrapper {
-    opacity: 1; /* ...a imagem fica visível */
 }
