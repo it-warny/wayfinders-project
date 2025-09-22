@@ -11,10 +11,10 @@
             <div class="timeline-dot"></div>
             <div class="timeline-content card text-white bg-dark">
                 {% if memory.media_type == 'image' %}
-                    <img src="{{ memory.media_url }}" class="card-img-top" alt="{{ memory.title }}">
+                    <img src="{{ memory.media_url.replace('/upload/', '/upload/w_600,c_limit/') }}" class="card-img-top" alt="{{ memory.title }}">
                 {% elif memory.media_type == 'video' %}
                     <video controls class="card-img-top">
-                        <source src="{{ memory.media_url }}" type="video/mp4">
+                        <source src="{{ memory.media_url.replace('/upload/', '/upload/w_600,c_limit/') }}" type="video/mp4">
                         Seu navegador não suporta vídeos.
                     </video>
                 {% endif %}
