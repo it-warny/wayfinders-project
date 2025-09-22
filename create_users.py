@@ -20,14 +20,14 @@ users_to_create = [
 # para que possamos interagir com o banco de dados.
 with app.app_context():
     print("Criando tabelas (se não existirem)...")
-    # A LINHA DA SOLUÇÃO: Garantimos que as tabelas existem ANTES de tentar usá-las.
     db.create_all()
 
     print("Criando usuários...")
     for user_data in users_to_create:
         existing_user = User.query.filter_by(username=user_data['username']).first()
         if not existing_user:
-            hashed_password = generate_password_hash(user_data['password'], method='pbkdf2:sha266')
+            # A LINHA CORRIGIDA: trocamos 'sha266' por 'sha256'
+            hashed_password = generate_password_hash(user_data['password'], method='pbkdf2:sha256')
             new_user = User(username=user_data['username'], password_hash=hashed_password)
             db.session.add(new_user)
             print(f"Usuário '{user_data['username']}' criado.")
