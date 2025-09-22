@@ -1,66 +1,84 @@
+/* M6_P1_App web com Flask e base de dados SQLite3_v2.docx.pdf (Customizado) */
+
+/* Estilo para o fundo da página, pego do uiGradients */
+body {
+    background: #000000;
+    background: -webkit-linear-gradient(to right, #434343, #000000);
+    background: linear-gradient(to right, #434343, #000000);
+    /* Adicionamos uma cor de texto clara para garantir a leitura no fundo escuro */
+    color: #f8f9fa;
+}
+
+/* Nova classe de título com uma fonte mais limpa e moderna */
+.titulo {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300; /* Um peso de fonte mais leve */
+}
+
+/* Estilo para riscar o texto da tarefa quando ela for concluída */
+.tarefa-feita {
+    text-decoration: line-through;
+    color: #888; /* Um cinza para indicar que está 'inativa' */
+}
+
+
 /*
 ===============
-CSS DA TIMELINE
+CSS DA TIMELINE (COM A ESTRADA)
 ===============
 */
 
-/* O container principal que vai segurar tudo. A posição 'relative' é crucial
-   para que a linha vertical (que usará 'absolute') se posicione corretamente. */
 .timeline-container {
     position: relative;
     padding: 20px 0;
 }
 
-/* A linha vertical no meio da 'estrada'.
-   Usamos um pseudo-elemento '::before' para criar um elemento visual sem precisar de mais HTML. */
+/* A MUDANÇA ESTÁ AQUI */
 .timeline-container::before {
     content: '';
     position: absolute;
     top: 0;
-    left: 50%; /* Posiciona no meio horizontal */
-    transform: translateX(-50%); /* Centraliza a linha perfeitamente */
-    width: 4px;
+    left: 50%;
+    transform: translateX(-50%);
     height: 100%;
-    background-color: #4e5d6c; /* Uma cor de linha que combina com o tema */
-    border-radius: 4px;
+
+    /* --- INÍCIO DA ALTERAÇÃO --- */
+    width: 10px; /* Deixamos a 'estrada' um pouco mais larga */
+    /* Substituímos a cor sólida por uma imagem de estrada que se repete */
+    background-image: url(https://i.imgur.com/V3222V8.png);
+    background-repeat: repeat-y; /* Mandamos repetir na vertical */
+    /* --- FIM DA ALTERAÇÃO --- */
 }
 
-/* Cada 'parada' ou 'item' na nossa estrada */
 .timeline-item {
     padding: 20px 40px;
     position: relative;
     width: 50%;
 }
 
-/* O 'pino' ou 'bola' que conecta cada memória à linha do tempo */
 .timeline-dot {
     content: '';
     position: absolute;
     width: 20px;
     height: 20px;
-    background-color: #00bc8c; /* Uma cor de destaque */
+    background-color: #00bc8c;
     border: 3px solid #303030;
     top: 35px;
     border-radius: 50%;
-    z-index: 1; /* Para ficar na frente da linha */
+    z-index: 1;
 }
 
-/* Estilos específicos para os itens da ESQUERDA */
-.timeline-item.left {
-    left: 0;
-    text-align: right; /* Alinha o texto do card para a direita */
-}
-
+/* PEQUENO AJUSTE AQUI para o pino ficar centralizado na nova estrada */
 .timeline-item.left .timeline-dot {
-    right: -10px; /* Posiciona o pino na borda direita do item */
+    right: -10px; /* Mantido, pois o cálculo de posicionamento ainda funciona bem */
 }
 
-
-/* Estilos específicos para os itens da DIREITA */
-.timeline-item.right {
-    left: 50%; /* Empurra o container do item para a metade direita da tela */
-}
-
+/* PEQUENO AJUSTE AQUI para o pino ficar centralizado na nova estrada */
 .timeline-item.right .timeline-dot {
-    left: -10px; /* Posiciona o pino na borda esquerda do item */
+    left: -10px; /* Mantido, pois o cálculo de posicionamento ainda funciona bem */
+}
+
+/* O resto continua igual */
+.timeline-content {
+    /* Estilos para o card da memória */
 }
