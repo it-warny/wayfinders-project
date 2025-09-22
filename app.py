@@ -8,22 +8,22 @@ from datetime import datetime
 import cloudinary
 import cloudinary.uploader
 
-# --- CONFIGURAÇÃO INICIAL ---
+# --- CONFIGURAÇÃO INICIAL E SEGURA ---
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'uma-chave-secreta-bem-segura-e-dificil'
+# Agora a SECRET_KEY vem de uma variável de ambiente
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'uma-chave-padrao-caso-nao-encontre')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'wayfinders.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-# --- CONFIGURAÇÃO DO CLOUDINARY ---
-# COLOQUE SUAS CREDENCIAIS AQUI!
+# --- CONFIGURAÇÃO DO CLOUDINARY (LENDO VARIÁVEIS DE AMBIENTE) ---
 cloudinary.config(
-    cloud_name="dn39tnxxi",
-    api_key="254876239431644",
-    api_secret="vhTjM62113gVOOpbDviXfbiF-CI"
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET')
 )
 
 # --- MODELOS DO BANCO DE DADOS (sem mudanças) ---
