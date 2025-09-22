@@ -1,0 +1,66 @@
+/*
+===============
+CSS DA TIMELINE
+===============
+*/
+
+/* O container principal que vai segurar tudo. A posição 'relative' é crucial
+   para que a linha vertical (que usará 'absolute') se posicione corretamente. */
+.timeline-container {
+    position: relative;
+    padding: 20px 0;
+}
+
+/* A linha vertical no meio da 'estrada'.
+   Usamos um pseudo-elemento '::before' para criar um elemento visual sem precisar de mais HTML. */
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%; /* Posiciona no meio horizontal */
+    transform: translateX(-50%); /* Centraliza a linha perfeitamente */
+    width: 4px;
+    height: 100%;
+    background-color: #4e5d6c; /* Uma cor de linha que combina com o tema */
+    border-radius: 4px;
+}
+
+/* Cada 'parada' ou 'item' na nossa estrada */
+.timeline-item {
+    padding: 20px 40px;
+    position: relative;
+    width: 50%;
+}
+
+/* O 'pino' ou 'bola' que conecta cada memória à linha do tempo */
+.timeline-dot {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #00bc8c; /* Uma cor de destaque */
+    border: 3px solid #303030;
+    top: 35px;
+    border-radius: 50%;
+    z-index: 1; /* Para ficar na frente da linha */
+}
+
+/* Estilos específicos para os itens da ESQUERDA */
+.timeline-item.left {
+    left: 0;
+    text-align: right; /* Alinha o texto do card para a direita */
+}
+
+.timeline-item.left .timeline-dot {
+    right: -10px; /* Posiciona o pino na borda direita do item */
+}
+
+
+/* Estilos específicos para os itens da DIREITA */
+.timeline-item.right {
+    left: 50%; /* Empurra o container do item para a metade direita da tela */
+}
+
+.timeline-item.right .timeline-dot {
+    left: -10px; /* Posiciona o pino na borda esquerda do item */
+}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Nossa Trilha{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-5">Nossa Trilha de Memórias</h1>
+
+<div class="timeline-container">
+    {% for memory in memories %}
+        <div class="timeline-item {{ loop.cycle('left', 'right') }}">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content card text-white bg-dark">
+                {% if memory.media_type == 'image' %}
+                    <img src="{{ memory.media_url }}" class="card-img-top" alt="{{ memory.title }}">
+                {% elif memory.media_type == 'video' %}
+                    <video controls class="card-img-top">
+                        <source src="{{ memory.media_url }}" type="video/mp4">
+                        Seu navegador não suporta vídeos.
+                    </video>
+                {% endif %}
+
+                <div class="card-header d-flex justify-content-between">
+                    <h6>{{ memory.title }}</h6>
+                    <span>{{ memory.event_date.strftime('%d/%m/%Y') }}</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ memory.description }}</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-dismissible alert-info">
+          <strong>A estrada começa aqui!</strong> Clique em "Adicionar Lembrança" no topo para criar nossa primeira parada.
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
