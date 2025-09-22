@@ -88,7 +88,7 @@ CSS DA TIMELINE
     padding: 20px 40px;
     position: relative;
     width: 50%;
-    box-sizing: border-box; /* Garante que o padding não afete a largura total */
+    box-sizing: border-box;
 }
 
 .timeline-dot {
@@ -96,14 +96,13 @@ CSS DA TIMELINE
     position: absolute;
     width: 20px;
     height: 20px;
-    background-color: #78C2AD; /* Nova cor para o pino */
+    background-color: #78C2AD;
     border: 3px solid #303030;
     top: 35px;
     border-radius: 50%;
     z-index: 1;
 }
 
-/* Itens da Esquerda */
 .timeline-item.left {
     left: 0;
 }
@@ -112,11 +111,24 @@ CSS DA TIMELINE
     right: -10px;
 }
 
-/* Itens da Direita */
 .timeline-item.right {
-    left: 50%; /* Essencial para empurrar o item para a metade direita */
+    left: 50%;
 }
 
 .timeline-item.right .timeline-dot {
     left: -10px;
+}
+
+
+/* --- NOVOS ESTILOS PARA OS CARDS DE MEMÓRIA --- */
+
+/* Remove o fundo e adiciona uma borda sutil no card */
+.timeline-content.card {
+    background: transparent;
+    border: 1px solid #444; /* Uma borda cinza escura sutil */
+}
+
+/* Centraliza o texto da descrição */
+.timeline-content .card-body {
+    text-align: center;
 }
