@@ -12,13 +12,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'uma-chave-padrao-caso-nao-encontre')
 
-# ESTE É O BLOCO DE CÓDIGO CORRIGIDO
+# BLOCO DE CÓDIGO COM A LINHA DE DEBUG
 DATABASE_URL = os.environ.get('DATABASE_URL')
+# A LINHA DO "DEDO-DURO": VAI IMPRIMIR A URL NO LOG DO RENDER
+print(f"--- URL DO BANCO DE DADOS RECEBIDA: {DATABASE_URL} ---")
 if DATABASE_URL:
-    # AGORA USAMOS A URL DIRETAMENTE, SEM O .replace()
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 else:
-    # Continua usando o banco de dados local (SQLite) se não estiver no Render
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'wayfinders.db')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -54,11 +54,11 @@ def load_user(user_id):
     return db.session.get(User, int(user_id))
 
 # --- ROTAS (sem mudanças) ---
-# ... (todas as suas rotas de login, logout, timeline, add, edit, delete continuam aqui)
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# ... (todas as outras rotas continuam exatamente iguais) ...
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -130,10 +130,8 @@ def edit_memory(memory_id):
         return redirect(url_for('timeline'))
     return render_template('edit_memory.html', memory=memory)
 
-
 # --- EXECUÇÃO ---
 if __name__ == '__main__':
-    # Este with app.app_context() só vai rodar e criar tabelas no seu BD local
     with app.app_context():
         db.create_all()
     app.run(debug=True)
