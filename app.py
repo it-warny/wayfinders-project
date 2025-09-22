@@ -12,10 +12,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'uma-chave-padrao-caso-nao-encontre')
 
-# BLOCO DE CÓDIGO COM A LINHA DE DEBUG
+# BLOCO DE CÓDIGO FINAL E LIMPO
 DATABASE_URL = os.environ.get('DATABASE_URL')
-# A LINHA DO "DEDO-DURO": VAI IMPRIMIR A URL NO LOG DO RENDER
-print(f"--- URL DO BANCO DE DADOS RECEBIDA: {DATABASE_URL} ---")
 if DATABASE_URL:
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 else:
@@ -31,7 +29,7 @@ cloudinary.config(
     api_secret=os.environ.get('CLOUDINARY_API_SECRET')
 )
 
-# --- MODELOS (sem mudanças) ---
+# --- MODELOS ---
 class User(db.Model, UserMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
@@ -47,18 +45,17 @@ class Memory(db.Model):
     media_url = db.Column(db.String(300), nullable=False)
     media_type = db.Column(db.String(10), nullable=False)
 
-
-# --- CALLBACK (sem mudanças) ---
+# --- CALLBACK ---
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
-# --- ROTAS (sem mudanças) ---
+# --- ROTAS ---
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# ... (todas as outras rotas continuam exatamente iguais) ...
+# ... (todas as outras rotas) ...
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -129,6 +126,7 @@ def edit_memory(memory_id):
         flash('Lembrança atualizada com sucesso!')
         return redirect(url_for('timeline'))
     return render_template('edit_memory.html', memory=memory)
+
 
 # --- EXECUÇÃO ---
 if __name__ == '__main__':
