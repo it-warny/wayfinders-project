@@ -14,6 +14,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'uma-chave-padrao-caso-nao-encontre')
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
+    # Corrige a string de conexão para o SQLAlchemy no Render
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'wayfinders.db')
@@ -26,6 +27,14 @@ cloudinary.config(
     api_key=os.environ.get('CLOUDINARY_API_KEY'),
     api_secret=os.environ.get('CLOUDINARY_API_SECRET')
 )
+
+# --- MAPEAMENTO DE CARICATURAS ---
+USER_CARICATURES = {
+    'warny': 'caricaturas/warny.jpg',
+    'fernanda': 'caricaturas/fernanda.jpg',
+    'gabriel': 'caricaturas/gabriel.jpg',
+    'ayanne': 'caricaturas/ayanne.jpg'
+}
 
 
 # --- MODELOS ---
@@ -40,7 +49,7 @@ class Memory(db.Model):
     __tablename__ = "memories"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
-    date = db.Column(db.Date, nullable=False, name="event_date")  # Renomeando a coluna no modelo
+    date = db.Column(db.Date, nullable=False, name="event_date")
     description = db.Column(db.Text, nullable=True)
     media_url = db.Column(db.String(300), nullable=False)
     media_type = db.Column(db.String(10), nullable=False)
@@ -83,7 +92,7 @@ def logout():
 @login_required
 def timeline():
     memories = Memory.query.order_by(Memory.date.desc()).all()
-    return render_template('timeline.html', memories=memories, cache_id=int(time.time()))
+    return render_template('timeline.html', memories=memories, cache_id=int(time.time()), caricatures=USER_CARICATURES)
 
 
 @app.route('/add-memory', methods=['POST'])
@@ -122,7 +131,7 @@ def edit_memory(memory_id):
         db.session.commit()
         flash('Memória atualizada com sucesso!', 'success')
         return redirect(url_for('timeline'))
-    return render_template('edit_memory.html', memory=memory, cache_id=int(time.time()))
+    return render_template('edit_memory.html', memory=memory, cache_id=int(time.time()), caricatures=USER_CARICATURES)
 
 
 @app.route('/delete-memory/<int:memory_id>', methods=['POST'])

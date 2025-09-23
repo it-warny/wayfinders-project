@@ -1,129 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+body { font-family: 'Poppins', sans-serif; background-image: url('images/background.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: fixed; min-height: 100vh; color: #adb5bd; }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background-image: url('images/background.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    min-height: 100vh;
-    color: #adb5bd;
-}
-
-.navbar {
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    height: 70px;
-}
+/* --- NAVBAR --- */
+.navbar { background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); height: 70px; }
+.navbar-brand { font-size: 1rem; }
+/* NOVO: Estilo do status do usuário */
+.user-presence { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 500; }
+.user-caricature { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #FFC107; object-fit: cover; }
 
 /* --- HOMEPAGE --- */
-.interactive-logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.8rem; /* Espaçamento mais reduzido ainda */
-    position: relative;
-    padding: 20px;
-    text-align: center;
-}
-
+.interactive-logo-container { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.8rem; position: relative; padding: 20px; text-align: center; }
 .logo-part { position: relative; cursor: pointer; }
-
-/* AJUSTE: Tamanho da fonte do título reduzido novamente */
-.logo-name {
-    font-size: 3.6rem; /* Reduzido de 4rem */
-    font-weight: 700;
-    color: white;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-    transition: all 0.3s ease;
-}
-
+.logo-name { font-size: 3.6rem; font-weight: 700; color: white; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); transition: all 0.3s ease; }
 .logo-subname { display: block; font-size: 1.1rem; color: #ddd; margin-top: -15px; transition: all 0.3s ease; }
-
-/* AJUSTE: Caricatura reposicionada para baixo */
-.caricature {
-    display: none;
-    position: absolute;
-    bottom: 125%; /* Aumentado de 110% para criar mais espaço */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 180px;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 5px solid #FFC107;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-    z-index: 10;
-    pointer-events: none;
-}
+/* AJUSTE: Caricatura mais para baixo */
+.caricature { display: none; position: absolute; bottom: 150%; left: 50%; transform: translateX(-50%); width: 180px; height: 180px; object-fit: cover; border-radius: 50%; border: 5px solid #FFC107; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 10; pointer-events: none; }
 .logo-part:hover .caricature { display: block; }
 .logo-part:hover .logo-name, .logo-part:hover .logo-subname { transform: scale(1.1); }
+.lead { background-color: rgba(0, 0, 0, 0.6); padding: 10px 20px; border-radius: 8px; display: inline-block; }
 
-.lead {
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 10px 20px;
-    border-radius: 8px;
-    display: inline-block;
-}
-
-/* --- PÁGINA DE LOGIN: FORMATO CÍRCULAR (Mantido como está) --- */
+/* --- FORMULÁRIOS (LOGIN E EDIÇÃO) --- */
 .login-container { background-color: rgba(30, 30, 30, 0.85); box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); width: 400px; height: 400px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2.5rem; margin: 0 auto; }
 .login-container .form-group { width: 100%; text-align: center; }
 .login-container label { margin-bottom: 0.5rem; }
+/* NOVO: Estilo para o formulário retangular (Editar Memória) */
+.form-container { background-color: rgba(30, 30, 30, 0.85); padding: 2.5rem; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.6); }
 
-/* --- TIMELINE DE MEMÓRIAS --- */
+/* --- TIMELINE --- */
 .timeline-container { position: relative; max-width: 1200px; margin: 0 auto; }
 .timeline-container::after { content: ''; position: absolute; width: 6px; background-color: rgba(255, 255, 255, 0.2); top: 0; bottom: 0; left: 50%; margin-left: -3px; z-index: -1; }
-
-.timeline-item {
-    padding: 10px 40px;
-    position: relative;
-    width: 50%;
-    /* !! CORREÇÃO MÁGICA PARA A TIMELINE !! */
-    /* Garante que os itens não fiquem lado a lado */
-    clear: both;
-    float: left; /* Define um contexto de flutuação */
-}
-
-/* Inverte a flutuação para itens da direita */
-.timeline-item.right {
-    float: right;
-}
-
-.timeline-item .timeline-dot { content: ''; position: absolute; width: 25px; height: 25px; background-color: #4E2A84; border: 4px solid #FFC107; top: 30px; border-radius: 50%; z-index: 1; }
+.timeline-item { padding: 10px 50px; /* Aumenta o espaçamento lateral */ position: relative; width: 50%; clear: both; float: left; }
+.timeline-item.right { float: right; }
+.timeline-item .timeline-dot { display: none; } /* Remove o ponto da timeline */
 .timeline-item.left { left: 0; }
-.timeline-item.left .timeline-dot { right: -12.5px; }
-
-/* Ajuste para a posição do item direito */
-.timeline-item.right { left: 0; } /* Resetamos o "left: 50%" anterior */
-.timeline-item.right .timeline-dot { left: -12.5px; }
-
-.timeline-item .card {
-    background-color: rgba(30, 30, 30, 0.9) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    max-width: 380px;
-}
-.timeline-item.left .card { margin-right: 30px; float: right; }
-.timeline-item.right .card { margin-left: 30px; float: left; } /* Garante que o card fique à esquerda no container direito */
-.timeline-item .card-img-top, .timeline-item .timeline-video-thumb { cursor: pointer; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-.timeline-item .card-header h6 { margin-bottom: 0; }
+.timeline-item.right { left: 0; }
+.timeline-item .card { background-color: rgba(30, 30, 30, 0.9) !important; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); max-width: 350px; /* Reduz mais um pouco o tamanho */ }
+.timeline-item.left .card { margin-right: 40px; /* Aumenta margem */ float: right; }
+.timeline-item.right .card { margin-left: 40px; /* Aumenta margem */ float: left; }
+.timeline-item .card-img-top { cursor: pointer; }
+.timeline-item .card-body { padding-bottom: 0.5rem; }
+.timeline-item .card-title { margin-bottom: 0; }
+.timeline-item .card-footer { background-color: transparent; border-top: 1px solid rgba(255,255,255,0.1); }
 
 @media screen and (max-width: 768px) {
     .logo-name { font-size: 2.5rem; }
+    .user-presence { display: none !important; } /* Esconde o status online no mobile para não quebrar layout */
     .timeline-container::after { left: 31px; }
-    .timeline-item { width: 100%; padding-left: 70px; padding-right: 15px; float: none; /* Remove flutuação no mobile */ }
+    .timeline-item { width: 100%; padding-left: 70px; padding-right: 15px; float: none; }
     .timeline-item .card { max-width: 100%; }
     .timeline-item.left .card, .timeline-item.right .card { margin: 0; float: none; }
-    .timeline-item.left .timeline-dot, .timeline-item.right .timeline-dot { left: 18px; }
     .timeline-item.right { left: 0%; }
     .login-container { width: 90vw; height: 90vw; }
 }
 
-/* --- ESTILOS DO LIGHTBOX (MODAL) --- */
+/* --- MODAL (LIGHTBOX) --- */
 .modal-content { background-color: #212529; border: 1px solid rgba(255, 255, 255, 0.2); }
 .modal-header { border-bottom: 1px solid rgba(255, 255, 255, 0.2); text-align: center; display: block; }
 .modal-title { width: 100%; }
