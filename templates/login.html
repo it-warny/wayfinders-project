@@ -16,14 +16,7 @@
                 </div>
                 <button type="submit" class="btn btn-info btn-block mt-3">Entrar</button>
             </form>
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <div class="alert alert-danger mt-3" style="font-size: 0.8rem;">
-                        {{ messages[0] }}
-                    </div>
-                {% endif %}
-            {% endwith %}
-        </div>
+            </div>
     </div>
 </div>
 {% endblock %}
