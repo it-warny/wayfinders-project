@@ -14,7 +14,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'uma-chave-padrao-caso-nao-encontre')
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
-    # Corrige a string de conexão para o SQLAlchemy no Render
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'wayfinders.db')
@@ -64,12 +63,15 @@ def load_user(user_id):
 # --- ROTAS ---
 @app.route('/')
 def index():
-    # CORREÇÃO APLICADA AQUI
     return render_template('index.html', cache_id=int(time.time()), caricatures=USER_CARICATURES)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # CORREÇÃO 1: Redireciona se o usuário já estiver logado
+    if current_user.is_authenticated:
+        return redirect(url_for('timeline'))
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -79,7 +81,9 @@ def login():
             return redirect(url_for('timeline'))
         else:
             flash('Usuário ou senha inválidos. Tente novamente.')
-    return render_template('login.html', cache_id=int(time.time()))
+
+    # CORREÇÃO 2: Passa as caricaturas para o template
+    return render_template('login.html', cache_id=int(time.time()), caricatures=USER_CARICATURES)
 
 
 @app.route('/logout')
@@ -99,47 +103,22 @@ def timeline():
 @app.route('/add-memory', methods=['POST'])
 @login_required
 def add_memory():
-    title = request.form.get('title')
-    description = request.form.get('description')
-    event_date_str = request.form.get('event_date')
-    media_file = request.files.get('media_file')
-
-    event_date = datetime.strptime(event_date_str, '%Y-%m-%d').date()
-
-    upload_result = cloudinary.uploader.upload(media_file, resource_type="auto")
-
-    new_memory = Memory(
-        title=title,
-        description=description,
-        date=event_date,
-        media_url=upload_result['secure_url'],
-        media_type=upload_result['resource_type']
-    )
-    db.session.add(new_memory)
-    db.session.commit()
-    flash('Nova memória adicionada com sucesso!', 'success')
+    # ... (seu código de adicionar memória)
+    # ...
     return redirect(url_for('timeline'))
 
 
 @app.route('/edit-memory/<int:memory_id>', methods=['GET', 'POST'])
 @login_required
 def edit_memory(memory_id):
-    memory = db.get_or_404(Memory, memory_id)
-    if request.method == 'POST':
-        memory.title = request.form['title']
-        memory.date = datetime.strptime(request.form['event_date'], '%Y-%m-%d').date()
-        memory.description = request.form['description']
-        db.session.commit()
-        flash('Memória atualizada com sucesso!', 'success')
-        return redirect(url_for('timeline'))
+    # ... (seu código de editar memória)
+    # ...
     return render_template('edit_memory.html', memory=memory, cache_id=int(time.time()), caricatures=USER_CARICATURES)
 
 
 @app.route('/delete-memory/<int:memory_id>', methods=['POST'])
 @login_required
 def delete_memory(memory_id):
-    memory = db.get_or_404(Memory, memory_id)
-    db.session.delete(memory)
-    db.session.commit()
-    flash('Memória apagada.', 'info')
+    # ... (seu código de deletar memória)
+    # ...
     return redirect(url_for('timeline'))
