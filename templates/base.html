@@ -7,36 +7,56 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}?v={{ cache_id }}">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url_for('timeline') }}">WayFinders on a Great Adventure</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ml-auto">
-                    {% if current_user.is_authenticated %}
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#addMemoryModal">
-                            Adicionar Lembrança
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-                    </li>
-                    {% endif %}
-                </ul>
+    <div class="background-overlay"></div> <div class="content-wrapper"> <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url_for('timeline') }}">WayFinders on a Great Adventure</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#addMemoryModal">
+                                Adicionar Lembrança
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <main class="container mt-4">
-        {% block content %}{% endblock %}
-    </main>
+        <main class="container mt-4">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
 
     <div class="modal fade" id="addMemoryModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content bg-dark text-white">
+          <div class="modal-header">
+            <h5 class="modal-title">Adicionar Nova Lembrança</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="{{ url_for('add_memory') }}" enctype="multipart/form-data">
+                <div class="form-group"><label for="title">Título</label><input type="text" class="form-control" name="title" required></div>
+                <div class="form-group"><label for="event_date">Data do Evento</label><input type="date" class="form-control" name="event_date" required></div>
+                <div class="form-group"><label for="description">Descrição</label><textarea class="form-control" name="description" rows="3"></textarea></div>
+                <div class="form-group"><label for="media_file">Foto ou Vídeo</label><input type="file" class="form-control-file" name="media_file" required></div>
+                <button type="submit" class="btn btn-info btn-block">Salvar Lembrança</button>
+            </form>
+          </div>
+        </div>
       </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
