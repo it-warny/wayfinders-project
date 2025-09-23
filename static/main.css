@@ -6,12 +6,17 @@ body {
     color: #f8f9fa;
 }
 
+/*
+=========================
+CSS DA PÁGINA INICIAL
+=========================
+*/
+
 .public-page-body {
-    height: 100%;
-    margin: 0;
+    background: linear-gradient(45deg, #f3ec78, #af4261);
+    color: #212529;
 }
 
-/* Estilos do Logo */
 .logo-container {
     display: flex;
     justify-content: center;
@@ -27,15 +32,16 @@ body {
 }
 
 .logo-main-text {
+    font-family: 'Pacifico', cursive;
     font-size: 4rem;
     font-weight: bold;
-    color: #00bc8c;
+    color: #343a40;
     margin: 0;
 }
 
 .logo-sub-text {
     font-size: 1.5rem;
-    color: #adb5bd;
+    color: #495057;
     margin-top: -10px;
 }
 
@@ -53,7 +59,7 @@ body {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 3px solid #00bc8c;
+    border: 3px solid #343a40;
     object-fit: cover;
 }
 
@@ -70,8 +76,11 @@ CSS DA TIMELINE
 .timeline-container {
     position: relative;
     padding: 20px 0;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
+/* A MÁGICA ESTÁ AQUI: A ESTRADA FEITA COM CSS */
 .timeline-container::before {
     content: '';
     position: absolute;
@@ -79,9 +88,16 @@ CSS DA TIMELINE
     left: 50%;
     transform: translateX(-50%);
     height: 100%;
-    width: 10px;
-    background-image: url(https://i.imgur.com/V3222V8.png);
-    background-repeat: repeat-y;
+    width: 8px; /* Largura da estrada */
+    background-color: #404040; /* Cor do asfalto */
+    /* Desenha a faixa tracejada por cima do asfalto */
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 10px, /* Espaço de 10px */
+        #ccc 10px,        /* Faixa cinza clara */
+        #ccc 20px         /* A faixa tem 10px de comprimento */
+    );
 }
 
 .timeline-item {
@@ -108,7 +124,7 @@ CSS DA TIMELINE
 }
 
 .timeline-item.left .timeline-dot {
-    right: -10px;
+    right: -11px; /* Ajuste fino para centralizar o pino */
 }
 
 .timeline-item.right {
@@ -116,19 +132,39 @@ CSS DA TIMELINE
 }
 
 .timeline-item.right .timeline-dot {
-    left: -10px;
+    left: -9px; /* Ajuste fino para centralizar o pino */
 }
 
-
-/* --- NOVOS ESTILOS PARA OS CARDS DE MEMÓRIA --- */
-
-/* Remove o fundo e adiciona uma borda sutil no card */
 .timeline-content.card {
     background: transparent;
-    border: 1px solid #444; /* Uma borda cinza escura sutil */
+    border: 1px solid #444;
 }
 
-/* Centraliza o texto da descrição */
 .timeline-content .card-body {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     text-align: center;
+}
+
+/*
+=========================
+RESPONSIVIDADE PARA CELULAR
+=========================
+*/
+
+@media (max-width: 768px) {
+    .timeline-container::before {
+        left: 20px;
+    }
+    .timeline-item {
+        width: 100%;
+        padding-left: 50px;
+        padding-right: 15px;
+    }
+    .timeline-item.left, .timeline-item.right {
+        left: 0;
+    }
+    .timeline-item.left .timeline-dot, .timeline-item.right .timeline-dot {
+        left: 11px; /* Ajuste fino para centralizar o pino */
+    }
 }
