@@ -10,14 +10,15 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container d-flex justify-content-between">
-            <a class="navbar-brand" href="{{ url_for('timeline') if current_user.is_authenticated else url_for('index') }}">
-                {% block navbar_brand_text %}
-                    WayFinders on a Great Adventure
-                {% endblock %}
-            </a>
+        <div class="container d-flex justify-content-between align-items-center">
 
-            {% if current_user.is_authenticated %}
+            {% block navbar_brand_element %}
+                <a class="navbar-brand" href="{{ url_for('timeline') }}">
+                    WayFinders on a Great Adventure
+                </a>
+            {% endblock %}
+
+            {% if current_user.is_authenticated and request.endpoint != 'index' %}
             <div class="user-presence d-none d-lg-flex">
                 <img src="{{ url_for('static', filename=caricatures.get(current_user.username.lower(), '')) }}" class="user-caricature">
                 <span>{{ current_user.username }} está online</span>
@@ -30,6 +31,7 @@
                 <a class="btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
             </div>
             {% endif %}
+
         </div>
     </nav>
 
