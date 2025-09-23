@@ -64,7 +64,8 @@ def load_user(user_id):
 # --- ROTAS ---
 @app.route('/')
 def index():
-    return render_template('index.html', cache_id=int(time.time()))
+    # CORREÇÃO APLICADA AQUI
+    return render_template('index.html', cache_id=int(time.time()), caricatures=USER_CARICATURES)
 
 
 @app.route('/login', methods=['GET', 'POST'])
