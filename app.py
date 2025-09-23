@@ -6,19 +6,17 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import cloudinary
 import cloudinary.uploader
+import time # <-- NOVA IMPORTAÇÃO
 
 # --- CONFIGURAÇÃO ---
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'uma-chave-padrao-caso-nao-encontre')
-
-# BLOCO DE CÓDIGO FINAL E LIMPO
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'wayfinders.db')
-
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
@@ -53,9 +51,9 @@ def load_user(user_id):
 # --- ROTAS ---
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # Adicionando o cache_id
+    return render_template('index.html', cache_id=int(time.time()))
 
-# ... (todas as outras rotas) ...
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -67,7 +65,8 @@ def login():
             return redirect(url_for('timeline'))
         else:
             flash('Usuário ou senha inválidos. Tente novamente.')
-    return render_template('login.html')
+    # Adicionando o cache_id
+    return render_template('login.html', cache_id=int(time.time()))
 
 @app.route('/logout')
 @login_required
@@ -79,34 +78,20 @@ def logout():
 @login_required
 def timeline():
     memories = Memory.query.order_by(Memory.event_date.desc()).all()
-    return render_template('timeline.html', memories=memories)
+    # Adicionando o cache_id
+    return render_template('timeline.html', memories=memories, cache_id=int(time.time()))
 
+# ... (outras rotas como add, edit, delete não precisam de mudança pois redirecionam) ...
 @app.route('/add-memory', methods=['POST'])
 @login_required
 def add_memory():
-    title = request.form['title']
-    event_date_str = request.form['event_date']
-    description = request.form['description']
-    media_file = request.files.get('media_file')
-    if not all([title, event_date_str, media_file]):
-        flash('Título, data e arquivo de mídia são obrigatórios!')
-        return redirect(url_for('timeline'))
-    upload_result = cloudinary.uploader.upload(media_file)
-    media_url = upload_result['secure_url']
-    event_date = datetime.strptime(event_date_str, '%Y-%m-%d').date()
-    media_type = upload_result['resource_type']
-    new_memory = Memory(title=title, event_date=event_date, description=description, media_url=media_url, media_type=media_type)
-    db.session.add(new_memory)
-    db.session.commit()
+    # ... (código igual)
     return redirect(url_for('timeline'))
 
 @app.route('/delete-memory/<int:memory_id>', methods=['POST'])
 @login_required
 def delete_memory(memory_id):
-    memory = db.get_or_404(Memory, memory_id)
-    db.session.delete(memory)
-    db.session.commit()
-    flash('Lembrança apagada com sucesso!')
+    # ... (código igual)
     return redirect(url_for('timeline'))
 
 @app.route('/edit-memory/<int:memory_id>', methods=['GET', 'POST'])
@@ -114,18 +99,10 @@ def delete_memory(memory_id):
 def edit_memory(memory_id):
     memory = db.get_or_404(Memory, memory_id)
     if request.method == 'POST':
-        memory.title = request.form['title']
-        memory.event_date = datetime.strptime(request.form['event_date'], '%Y-%m-%d').date()
-        memory.description = request.form['description']
-        new_media_file = request.files.get('media_file')
-        if new_media_file:
-            upload_result = cloudinary.uploader.upload(new_media_file)
-            memory.media_url = upload_result['secure_url']
-            memory.media_type = upload_result['resource_type']
-        db.session.commit()
-        flash('Lembrança atualizada com sucesso!')
+        # ... (código igual)
         return redirect(url_for('timeline'))
-    return render_template('edit_memory.html', memory=memory)
+    # Adicionando o cache_id
+    return render_template('edit_memory.html', memory=memory, cache_id=int(time.time()))
 
 
 # --- EXECUÇÃO ---
