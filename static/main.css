@@ -1,76 +1,49 @@
-/* Estilos gerais */
-body {
-    background: #000000;
-    background: -webkit-linear-gradient(to right, #434343, #000000);
-    background: linear-gradient(to right, #434343, #000000);
-    color: #f8f9fa;
-}
-
 /*
 =========================
-CSS DA PÁGINA INICIAL
+ESTILOS GLOBAIS
 =========================
 */
 
+/* O fundo padrão para as páginas internas (timeline, login, etc) */
+body {
+    /* Usando a sua imagem da estrada como fundo! */
+    background-image: url('../images/background.jpg');
+    background-size: cover; /* Faz a imagem cobrir toda a tela */
+    background-position: center; /* Centraliza a imagem */
+    background-attachment: fixed; /* Deixa a imagem fixa enquanto a página rola */
+    /* Definindo a nova fonte principal para todo o site */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* O fundo alegre para a página inicial pública */
 .public-page-body {
     background: linear-gradient(45deg, #f3ec78, #af4261);
     color: #212529;
 }
 
-.logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.logo-item {
-    position: relative;
-    cursor: pointer;
-    text-align: center;
-}
-
-.logo-main-text {
-    font-family: 'Pacifico', cursive;
-    font-size: 4rem;
-    font-weight: bold;
-    color: #343a40;
-    margin: 0;
-}
-
-.logo-sub-text {
-    font-size: 1.5rem;
-    color: #495057;
-    margin-top: -10px;
-}
-
-.logo-image-wrapper {
-    position: absolute;
-    top: -160px;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    pointer-events: none;
-}
-
-.logo-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 3px solid #343a40;
-    object-fit: cover;
-}
-
-.logo-item:hover .logo-image-wrapper {
-    opacity: 1;
+/* Deixa a barra de navegação transparente para vermos o fundo */
+.bg-transparent {
+    background-color: transparent !important;
 }
 
 /*
-===============
+=========================
+CSS DA PÁGINA INICIAL E LOGO
+=========================
+*/
+/* ... (todo o código do logo continua o mesmo) ... */
+.logo-container { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; }
+.logo-item { position: relative; cursor: pointer; text-align: center; }
+.logo-main-text { font-family: 'Pacifico', cursive; font-size: 4rem; font-weight: bold; color: #343a40; margin: 0; }
+.logo-sub-text { font-size: 1.5rem; color: #495057; margin-top: -10px; }
+.logo-image-wrapper { position: absolute; top: -160px; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s ease-in-out; pointer-events: none; }
+.logo-image { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #343a40; object-fit: cover; }
+.logo-item:hover .logo-image-wrapper { opacity: 1; }
+
+/*
+=========================
 CSS DA TIMELINE
-===============
+=========================
 */
 
 .timeline-container {
@@ -80,7 +53,7 @@ CSS DA TIMELINE
     margin: 0 auto;
 }
 
-/* A MÁGICA ESTÁ AQUI: A ESTRADA FEITA COM CSS */
+/* A linha da estrada agora é um overlay semi-transparente */
 .timeline-container::before {
     content: '';
     position: absolute;
@@ -88,16 +61,9 @@ CSS DA TIMELINE
     left: 50%;
     transform: translateX(-50%);
     height: 100%;
-    width: 8px; /* Largura da estrada */
-    background-color: #404040; /* Cor do asfalto */
-    /* Desenha a faixa tracejada por cima do asfalto */
-    background-image: repeating-linear-gradient(
-        to bottom,
-        transparent,
-        transparent 10px, /* Espaço de 10px */
-        #ccc 10px,        /* Faixa cinza clara */
-        #ccc 20px         /* A faixa tem 10px de comprimento */
-    );
+    width: 8px;
+    background-color: rgba(0, 0, 0, 0.4); /* Preto com 40% de opacidade */
+    border-radius: 8px;
 }
 
 .timeline-item {
@@ -112,32 +78,22 @@ CSS DA TIMELINE
     position: absolute;
     width: 20px;
     height: 20px;
-    background-color: #78C2AD;
-    border: 3px solid #303030;
+    background-color: #f3ec78; /* Um amarelo para combinar com a homepage */
+    border: 3px solid rgba(0, 0, 0, 0.6);
     top: 35px;
     border-radius: 50%;
     z-index: 1;
 }
 
-.timeline-item.left {
-    left: 0;
-}
+.timeline-item.left { left: 0; }
+.timeline-item.left .timeline-dot { right: -11px; }
+.timeline-item.right { left: 50%; }
+.timeline-item.right .timeline-dot { left: -9px; }
 
-.timeline-item.left .timeline-dot {
-    right: -11px; /* Ajuste fino para centralizar o pino */
-}
-
-.timeline-item.right {
-    left: 50%;
-}
-
-.timeline-item.right .timeline-dot {
-    left: -9px; /* Ajuste fino para centralizar o pino */
-}
-
+/* O card agora tem um fundo semi-transparente para se destacar da estrada */
 .timeline-content.card {
-    background: transparent;
-    border: 1px solid #444;
+    background-color: rgba(40, 40, 40, 0.85); /* Cinza escuro com 85% de opacidade */
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .timeline-content .card-body {
@@ -151,20 +107,9 @@ CSS DA TIMELINE
 RESPONSIVIDADE PARA CELULAR
 =========================
 */
-
 @media (max-width: 768px) {
-    .timeline-container::before {
-        left: 20px;
-    }
-    .timeline-item {
-        width: 100%;
-        padding-left: 50px;
-        padding-right: 15px;
-    }
-    .timeline-item.left, .timeline-item.right {
-        left: 0;
-    }
-    .timeline-item.left .timeline-dot, .timeline-item.right .timeline-dot {
-        left: 11px; /* Ajuste fino para centralizar o pino */
-    }
+    .timeline-container::before { left: 20px; }
+    .timeline-item { width: 100%; padding-left: 50px; padding-right: 15px; }
+    .timeline-item.left, .timeline-item.right { left: 0; }
+    .timeline-item.left .timeline-dot, .timeline-item.right .timeline-dot { left: 11px; }
 }
