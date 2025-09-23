@@ -1,121 +1,65 @@
-/*
-=========================
-ESTILOS GLOBAIS E FUNDO
-=========================
-*/
+/* Importa a fonte Poppins do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
 
+/* Estilo base para todo o projeto */
 body {
-    /* Define a nossa imagem como fundo para TODAS as páginas */
-    background-image: url('../images/background.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed; /* Efeito de a imagem ficar parada ao rolar */
-
-    /* Define a nossa fonte PADRÃO para tudo */
+    /* Define a fonte Poppins como padrão para todo o site */
     font-family: 'Poppins', sans-serif;
+
+    /* Define a imagem de fundo com o caminho CORRETO */
+    background-image: url('images/background.jpg');
+
+    /* Garante que a imagem de fundo cubra toda a tela, sem se repetir */
+    background-size: cover;
+
+    /* Centraliza a imagem de fundo */
+    background-position: center center;
+
+    /* Impede que a imagem de fundo se repita */
+    background-repeat: no-repeat;
+
+    /* --- IMPORTANTE: Efeito de Fundo Fixo --- */
+    /* Esta linha faz com que o fundo (a estrada) fique parado enquanto o conteúdo rola por cima */
+    background-attachment: fixed;
+
+    /* Garante que o fundo ocupe pelo menos 100% da altura da tela */
+    min-height: 100vh;
+
+    /* Mantém a cor do texto do seu tema Cyborg para boa legibilidade */
+    color: #adb5bd;
 }
 
-/* Camada escura semi-transparente que fica sobre a imagem de fundo */
-.background-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Preto com 50% de opacidade */
-    z-index: -1; /* Joga para trás do conteúdo */
+/* Garante que o container principal tenha um fundo transparente para vermos a imagem */
+.container, .container-fluid {
+    background-color: transparent;
 }
 
-/* Container para garantir que o conteúdo fique na frente da camada */
-.content-wrapper {
-    position: relative;
-    z-index: 1;
+/* Mantém o estilo do seu título principal */
+.logo-font {
+    font-family: 'Poppins', sans-serif; /* Garante a fonte correta se houver outra sobreposição */
+    font-weight: 700; /* Negrito */
+    font-size: 5rem;
+    color: #fff;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
 }
 
-/* Sombra no texto para melhorar a legibilidade sobre a foto */
-h1, h6, p, label, a, span, button {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+/* Outros ajustes para garantir consistência */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    color: #fff; /* Títulos em branco para melhor contraste */
 }
 
-/*
-=========================
-CSS DA PÁGINA INICIAL
-=========================
-*/
-
-.public-page-body {
-    /* Na página inicial, usamos um fundo diferente */
-    background: linear-gradient(45deg, #f3ec78, #af4261);
-    color: #212529;
+/* Ajustes no formulário de login para que o fundo da imagem apareça */
+.login-container {
+    background-color: rgba(30, 30, 30, 0.8); /* Fundo cinza escuro com 80% de opacidade */
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
-/* Na página inicial, removemos a sombra do texto pois o fundo é claro */
-.public-page-body h1, .public-page-body p, .public-page-body a {
-    text-shadow: none;
-}
-
-/* Estilos do Logo (sem alteração) */
-.logo-container { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; }
-.logo-item { position: relative; cursor: pointer; text-align: center; }
-.logo-main-text { font-family: 'Pacifico', cursive; font-size: 4rem; font-weight: bold; color: #343a40; margin: 0; }
-.logo-sub-text { font-size: 1.5rem; color: #495057; margin-top: -10px; }
-.logo-image-wrapper { position: absolute; top: -160px; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s ease-in-out; pointer-events: none; }
-.logo-image { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #343a40; object-fit: cover; }
-.logo-item:hover .logo-image-wrapper { opacity: 1; }
-
-/*
-=========================
-CSS DA TIMELINE E LOGIN
-=========================
-*/
-
-/* Container de login com fundo semi-transparente */
-.card.bg-form-override {
-    background-color: rgba(40, 40, 40, 0.75) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.timeline-container {
-    position: relative;
-    padding: 20px 0;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.timeline-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 100%;
-    width: 8px;
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 8px;
-}
-
-.timeline-item { padding: 20px 40px; position: relative; width: 50%; box-sizing: border-box; }
-.timeline-dot { content: ''; position: absolute; width: 20px; height: 20px; background-color: #f3ec78; border: 3px solid rgba(0, 0, 0, 0.6); top: 35px; border-radius: 50%; z-index: 1; }
-.timeline-item.left { left: 0; }
-.timeline-item.left .timeline-dot { right: -11px; }
-.timeline-item.right { left: 50%; }
-.timeline-item.right .timeline-dot { left: -9px; }
-
-.timeline-content.card {
-    background-color: rgba(40, 40, 40, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.timeline-content .card-body {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    text-align: center;
-}
-
-/* Responsividade para Celular (sem alteração) */
-@media (max-width: 768px) {
-    .timeline-container::before { left: 20px; }
-    .timeline-item { width: 100%; padding-left: 50px; padding-right: 15px; }
-    .timeline-item.left, .timeline-item.right { left: 0; }
-    .timeline-item.left .timeline-dot, .timeline-item.right .timeline-dot { left: 11px; }
+/* Ajustes nos cards de memória para que o fundo da imagem apareça */
+.memory-card {
+    background-color: rgba(30, 30, 30, 0.8); /* Fundo cinza escuro com 80% de opacidade */
+    border: none;
+    border-radius: 15px;
 }
