@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Bem-Vindos, WayFinders!{% endblock %}
+
 {% block content %}
 <div class="d-flex flex-column justify-content-center align-items-center text-center" style="min-height: 90vh;">
     <div class="interactive-logo-container mb-4">
@@ -22,4 +23,7 @@
     </div>
     <p class="lead mb-4">Um diário digital para celebrar nossa jornada de amizade.</p>
     <div>
-        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg" style="background-color: #4E2A84; border-color: #4E2A84;">A
+        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg" style="background-color: #4E2A84; border-color: #4E2A84;">Acessar a Trilha</a>
+    </div>
+</div>
+{% endblock %}
