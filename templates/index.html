@@ -1,59 +1,25 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem-vindo ao WayFinders</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}?v={{ cache_id }}">
-</head>
-<body class="public-page-body">
-
-<div class="container text-center d-flex flex-column justify-content-center" style="height: 100vh;">
-
-    <div class="logo-container">
-        <div class="logo-item">
-            <div class="logo-image-wrapper">
-                <img src="{{ url_for('static', filename='caricaturas/warny.jpg') }}" alt="Caricatura Warny" class="logo-image">
-            </div>
-            <h1 class="logo-main-text">Way</h1>
-            <p class="logo-sub-text">Warny</p>
+{% extends 'base.html' %}
+{% block title %}Bem-Vindos, WayFinders!{% endblock %}
+{% block content %}
+<div class="d-flex flex-column justify-content-center align-items-center text-center" style="min-height: 90vh;">
+    <div class="interactive-logo-container mb-4">
+        <div class="logo-part">
+            <span class="logo-name">Way</span><span class="logo-subname">Warny</span>
+            <img src="{{ url_for('static', filename='caricaturas/warny.jpg') }}" alt="Caricatura Warny" class="caricature">
         </div>
-        <div class="logo-item">
-            <div class="logo-image-wrapper">
-                <img src="{{ url_for('static', filename='caricaturas/fernanda.jpg') }}" alt="Caricatura Fernanda" class="logo-image">
-            </div>
-            <h1 class="logo-main-text">Finders</h1>
-            <p class="logo-sub-text">Fernanda</p>
+        <div class="logo-part">
+            <span class="logo-name">Finders</span><span class="logo-subname">Fernanda</span>
+            <img src="{{ url_for('static', filename='caricaturas/fernanda.jpg') }}" alt="Caricatura Fernanda" class="caricature">
         </div>
-        <div class="logo-item">
-            <div class="logo-image-wrapper">
-                <img src="{{ url_for('static', filename='caricaturas/gabriel.jpg') }}" alt="Caricatura Gabriel" class="logo-image">
-            </div>
-            <h1 class="logo-main-text">on a Great</h1>
-            <p class="logo-sub-text">Gabriel</p>
+        <div class="logo-part">
+            <span class="logo-name">on a Great</span><span class="logo-subname">Gabriel</span>
+            <img src="{{ url_for('static', filename='caricaturas/gabriel.jpg') }}" alt="Caricatura Gabriel" class="caricature">
         </div>
-        <div class="logo-item">
-            <div class="logo-image-wrapper">
-                <img src="{{ url_for('static', filename='caricaturas/ayanne.jpg') }}" alt="Caricatura Ayanne" class="logo-image">
-            </div>
-            <h1 class="logo-main-text">Adventure</h1>
-            <p class="logo-sub-text">Ayanne</p>
+        <div class="logo-part">
+            <span class="logo-name">Adventure</span><span class="logo-subname">Ayanne</span>
+            <img src="{{ url_for('static', filename='caricaturas/ayanne.jpg') }}" alt="Caricatura Ayanne" class="caricature">
         </div>
     </div>
-
-    <div class="mt-5">
-        <p class="lead">Um diário digital para celebrar nossa jornada de amizade.</p>
-        <a href="{{ url_for('login') }}" class="btn btn-info btn-lg">Acessar a Trilha</a>
-    </div>
-
-</div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+    <p class="lead mb-4">Um diário digital para celebrar nossa jornada de amizade.</p>
+    <div>
+        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg" style="background-color: #4E2A84; border-color: #4E2A84;">A

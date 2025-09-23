@@ -1,12 +1,12 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import cloudinary
 import cloudinary.uploader
-import time # <-- NOVA IMPORTAÇÃO
+import time
 
 # --- CONFIGURAÇÃO ---
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'uma-chave-padrao-caso-nao-encontre')
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
-    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'wayfinders.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -27,32 +27,36 @@ cloudinary.config(
     api_secret=os.environ.get('CLOUDINARY_API_SECRET')
 )
 
+
 # --- MODELOS ---
 class User(db.Model, UserMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    password_hash = db.Column(db.String(120), nullable=False)
+    password_hash = db.Column(db.String(256), nullable=False)
+
 
 class Memory(db.Model):
     __tablename__ = "memories"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
-    event_date = db.Column(db.Date, nullable=False)
+    date = db.Column(db.Date, nullable=False, name="event_date")  # Renomeando a coluna no modelo
     description = db.Column(db.Text, nullable=True)
     media_url = db.Column(db.String(300), nullable=False)
     media_type = db.Column(db.String(10), nullable=False)
+
 
 # --- CALLBACK ---
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
+
 # --- ROTAS ---
 @app.route('/')
 def index():
-    # Adicionando o cache_id
     return render_template('index.html', cache_id=int(time.time()))
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -65,8 +69,8 @@ def login():
             return redirect(url_for('timeline'))
         else:
             flash('Usuário ou senha inválidos. Tente novamente.')
-    # Adicionando o cache_id
     return render_template('login.html', cache_id=int(time.time()))
+
 
 @app.route('/logout')
 @login_required
@@ -74,39 +78,58 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+
 @app.route('/timeline')
 @login_required
 def timeline():
-    memories = Memory.query.order_by(Memory.event_date.desc()).all()
-    # Adicionando o cache_id
+    memories = Memory.query.order_by(Memory.date.desc()).all()
     return render_template('timeline.html', memories=memories, cache_id=int(time.time()))
 
-# ... (outras rotas como add, edit, delete não precisam de mudança pois redirecionam) ...
+
 @app.route('/add-memory', methods=['POST'])
 @login_required
 def add_memory():
-    # ... (código igual)
+    title = request.form.get('title')
+    description = request.form.get('description')
+    event_date_str = request.form.get('event_date')
+    media_file = request.files.get('media_file')
+
+    event_date = datetime.strptime(event_date_str, '%Y-%m-%d').date()
+
+    upload_result = cloudinary.uploader.upload(media_file, resource_type="auto")
+
+    new_memory = Memory(
+        title=title,
+        description=description,
+        date=event_date,
+        media_url=upload_result['secure_url'],
+        media_type=upload_result['resource_type']
+    )
+    db.session.add(new_memory)
+    db.session.commit()
+    flash('Nova memória adicionada com sucesso!', 'success')
     return redirect(url_for('timeline'))
 
-@app.route('/delete-memory/<int:memory_id>', methods=['POST'])
-@login_required
-def delete_memory(memory_id):
-    # ... (código igual)
-    return redirect(url_for('timeline'))
 
 @app.route('/edit-memory/<int:memory_id>', methods=['GET', 'POST'])
 @login_required
 def edit_memory(memory_id):
     memory = db.get_or_404(Memory, memory_id)
     if request.method == 'POST':
-        # ... (código igual)
+        memory.title = request.form['title']
+        memory.date = datetime.strptime(request.form['event_date'], '%Y-%m-%d').date()
+        memory.description = request.form['description']
+        db.session.commit()
+        flash('Memória atualizada com sucesso!', 'success')
         return redirect(url_for('timeline'))
-    # Adicionando o cache_id
     return render_template('edit_memory.html', memory=memory, cache_id=int(time.time()))
 
 
-# --- EXECUÇÃO ---
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+@app.route('/delete-memory/<int:memory_id>', methods=['POST'])
+@login_required
+def delete_memory(memory_id):
+    memory = db.get_or_404(Memory, memory_id)
+    db.session.delete(memory)
+    db.session.commit()
+    flash('Memória apagada.', 'info')
+    return redirect(url_for('timeline'))
