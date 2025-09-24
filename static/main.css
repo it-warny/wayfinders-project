@@ -29,13 +29,14 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .timeline-item.left .card { margin-right: 60px; float: right; }
 .timeline-item.right .card { margin-left: 50px; float: left; }
 .timeline-item .card-body { padding: 1rem 1.25rem; }
-/* AJUSTE: Tamanho do título da memória reduzido */
+
+/* AJUSTE FINAL: Tamanho do título da memória reduzido mais uma vez */
 .timeline-item .card-title {
     margin-bottom: 0;
-    font-size: 1rem; /* Reduzido */
-    white-space: nowrap; /* Impede a quebra de linha */
-    overflow: hidden; /* Esconde o que não couber */
-    text-overflow: ellipsis; /* Adiciona "..." no final se o texto for muito longo */
+    font-size: 0.9rem; /* Reduzido ainda mais */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .timeline-item .card-footer { background-color: transparent; border-top: 1px solid rgba(255,255,255,0.1); }
 
@@ -43,20 +44,25 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .modal-content { background-color: #212529; border: 1px solid rgba(255, 255, 255, 0.2); }
 .modal-header { border-bottom: 1px solid rgba(255, 255, 255, 0.2); text-align: center; display: block; position: relative; }
 .modal-title { width: 100%; }
-/* AJUSTE: Botão de fechar do modal estilizado como um X vermelho */
+
+/* AJUSTE FINAL: Botão de fechar do modal como um X vermelho e alinhado */
 .modal-header .close {
     position: absolute;
-    right: 15px;
+    right: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #dc3545; /* Vermelho do bootstrap */
-    font-size: 2.5rem; /* Aumenta o tamanho do X */
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+    color: #dc3545 !important; /* Força a cor vermelha */
+    font-size: 2.5rem;
     font-weight: 500;
-    opacity: 0.8;
-    text-shadow: none; /* Remove sombra padrão */
-    background: none; /* Remove fundo */
-    border: none; /* Remove borda */
+    opacity: 0.75;
+    text-shadow: none;
+    background: none;
+    border: none;
 }
-.modal-header .close:hover { opacity: 1; color: #dc3545; }
+.modal-header .close:hover { opacity: 1; }
 #lightbox-media { max-width: 90vw; max-height: 80vh; display: block; margin: 0 auto; object-fit: contain; }
-#lightbox-description { white-space: pre
+#lightbox-description { white-space: pre-wrap; margin-top: 15px; }
+
+/* ... (resto do CSS sem alterações) ... */
