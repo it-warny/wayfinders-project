@@ -29,11 +29,9 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .timeline-item.left .card { margin-right: 60px; float: right; }
 .timeline-item.right .card { margin-left: 50px; float: left; }
 .timeline-item .card-body { padding: 1rem 1.25rem; }
-
-/* AJUSTE FINAL: Tamanho do título da memória */
 .timeline-item .card-title {
     margin-bottom: 0;
-    font-size: 0.9rem; /* Reduzido */
+    font-size: 0.9rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -45,30 +43,29 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .modal-header { border-bottom: 1px solid rgba(255, 255, 255, 0.2); text-align: center; display: block; position: relative; }
 .modal-title { width: 100%; }
 
-/* AJUSTE FINAL E "FORÇA BRUTA": Botão de fechar do modal */
-#lightboxModal .modal-header button.close {
-    /* Resetando tudo */
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
-    opacity: 0.75;
-
-    /* Posicionamento preciso */
+/* NOVO AJUSTE: Botão de fechar customizado */
+.custom-close-btn {
     position: absolute;
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
+    padding: 0; /* Remove padding padrão */
+    border: none;
+    background: none;
+    cursor: pointer;
 
-    /* Visual */
-    font-size: 2.5rem;
-    color: #dc3545 !important; /* Força a cor vermelha */
+    /* Estilo do X */
+    font-size: 2.5rem; /* Tamanho do X */
     font-weight: 700;
+    color: #dc3545; /* Cor vermelha */
+    line-height: 1; /* Alinhamento vertical do X */
+    opacity: 0.75;
+    transition: opacity 0.2s ease-in-out;
 }
 
-#lightboxModal .modal-header button.close:hover {
+.custom-close-btn:hover {
     opacity: 1;
-    color: #a71d2a !important; /* Vermelho mais escuro no hover */
+    color: #a71d2a; /* Vermelho mais escuro no hover */
 }
 
 #lightbox-media { max-width: 90vw; max-height: 80vh; display: block; margin: 0 auto; object-fit: contain; }

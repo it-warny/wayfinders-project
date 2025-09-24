@@ -27,11 +27,22 @@
         <div class="alert alert-info"><strong>A estrada começa aqui!</strong> Clique em "Adicionar Memória" para criar nossa primeira parada.</div>
     {% endfor %}
 </div>
-<div class="modal fade" id="lightboxModal" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-centered"><div class="modal-content"><div class="modal-header text-center"><h5 class="modal-title w-100" id="lightbox-title"></h5><button type="button" class="close" data-dismiss="modal" style="position: absolute; right: 15px;"><span style="color: white;">&times;</span></button></div><div class="modal-body text-center"><div id="lightbox-media-container"></div><p id="lightbox-description" class="mt-3 text-left"></p></div></div></div></div>
+
+<div class="modal fade" id="lightboxModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title w-100" id="lightbox-title"></h5>
+                <button type="button" class="custom-close-btn" data-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <div id="lightbox-media-container"></div>
+                <p id="lightbox-description" class="mt-3 text-left"></p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block scripts %}
 <script>
-$('#lightboxModal').on('show.bs.modal', function (event) { var el = $(event.relatedTarget), modal = $(this), mediaContainer = modal.find('#lightbox-media-container'); modal.find('.modal-title').text(el.data('title')); modal.find('#lightbox-description').text(el.data('description')); mediaContainer.empty(); if (el.data('media-type') === 'image') mediaContainer.html('<img src="' + el.data('media-url') + '" id="lightbox-media" class="img-fluid">'); else if (el.data('media-type') === 'video') mediaContainer.html('<video src="' + el.data('media-url') + '" id="lightbox-media" class="img-fluid" controls autoplay></video>'); });
-$('#lightboxModal').on('hidden.bs.modal', function (e) { $(this).find('#lightbox-media-container').empty(); });
-</script>
-{% endblock %}
+$('#lightboxModal').on('show.bs.modal', function (event) { var el = $(event.relatedTarget), modal = $(this), mediaContainer = modal.find('#lightbox-media-
