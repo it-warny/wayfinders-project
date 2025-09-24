@@ -30,10 +30,10 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .timeline-item.right .card { margin-left: 50px; float: left; }
 .timeline-item .card-body { padding: 1rem 1.25rem; }
 
-/* AJUSTE FINAL: Tamanho do título da memória reduzido mais uma vez */
+/* AJUSTE FINAL: Tamanho do título da memória */
 .timeline-item .card-title {
     margin-bottom: 0;
-    font-size: 0.9rem; /* Reduzido ainda mais */
+    font-size: 0.9rem; /* Reduzido */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -45,23 +45,32 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .modal-header { border-bottom: 1px solid rgba(255, 255, 255, 0.2); text-align: center; display: block; position: relative; }
 .modal-title { width: 100%; }
 
-/* AJUSTE FINAL: Botão de fechar do modal como um X vermelho e alinhado */
-.modal-header .close {
+/* AJUSTE FINAL E "FORÇA BRUTA": Botão de fechar do modal */
+#lightboxModal .modal-header button.close {
+    /* Resetando tudo */
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    opacity: 0.75;
+
+    /* Posicionamento preciso */
     position: absolute;
-    right: 1rem;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    padding: 1rem;
-    margin: -1rem -1rem -1rem auto;
-    color: #dc3545 !important; /* Força a cor vermelha */
+
+    /* Visual */
     font-size: 2.5rem;
-    font-weight: 500;
-    opacity: 0.75;
-    text-shadow: none;
-    background: none;
-    border: none;
+    color: #dc3545 !important; /* Força a cor vermelha */
+    font-weight: 700;
 }
-.modal-header .close:hover { opacity: 1; }
+
+#lightboxModal .modal-header button.close:hover {
+    opacity: 1;
+    color: #a71d2a !important; /* Vermelho mais escuro no hover */
+}
+
 #lightbox-media { max-width: 90vw; max-height: 80vh; display: block; margin: 0 auto; object-fit: contain; }
 #lightbox-description { white-space: pre-wrap; margin-top: 15px; }
 

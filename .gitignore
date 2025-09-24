@@ -19,3 +19,4 @@ __pycache__/
 create_users.py
 reset_passwords.py
 change_password.py
+generate_hashes.py
