@@ -19,9 +19,11 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .logo-part:hover .logo-name, .logo-part:hover .logo-subname { transform: scale(1.1); }
 .lead { background-color: rgba(0, 0, 0, 0.6); padding: 10px 20px; border-radius: 8px; display: inline-block; }
 
-/* --- FORMULÁRIOS E TIMELINE --- */
+/* --- FORMULÁRIOS --- */
 .login-container { background-color: rgba(30, 30, 30, 0.85); box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); width: 400px; height: 400px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2.5rem; margin: 0 auto; }
 .form-container { background-color: rgba(30, 30, 30, 0.85); padding: 2.5rem; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.6); }
+
+/* --- TÍTULOS DE PÁGINA E TIMELINE --- */
 .page-title-container { display: inline-block; background-color: rgba(0, 0, 0, 0.6); padding: 1rem 2rem; border-radius: 15px; margin-bottom: 2rem; }
 .page-title-container h1 { margin-bottom: 0; }
 .timeline-container { position: relative; max-width: 1200px; margin: 0 auto; }
@@ -45,6 +47,12 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .lg-next, .lg-prev { background-color: rgba(30, 30, 30, 0.7) !important; border-radius: 50%; }
 .lg-next:hover, .lg-prev:hover { background-color: rgba(255, 193, 7, 0.8) !important; color: #fff !important; }
 
+/* --- TELA DE CARREGAMENTO (LOADING SCREEN) --- */
+@keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+.loading-container { width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-image: url('images/background.jpg'); background-size: cover; background-position: center center; animation: fadeIn 0.8s ease-in-out; }
+.loading-caricature { width: 220px; height: 220px; border-radius: 50%; border: 6px solid #FFC107; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 2rem; }
+.loading-text { font-size: 2.5rem; color: #fff; text-shadow: 2px 2px 8px rgba(0,0,0,0.8); background-color: rgba(0, 0, 0, 0.6); padding: 10px 30px; border-radius: 15px; }
+
 /* --- NOVAS SEÇÕES DA HOMEPAGE --- */
 .content-section { padding: 40px 0; color: #f8f9fa; }
 .section-title { display: inline-block; background-color: rgba(0, 0, 0, 0.6); padding: 10px 30px; border-radius: 10px; font-size: 2rem; margin-bottom: 25px; color: #fff; }
@@ -57,13 +65,6 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .contact-links .icon { width: 24px; height: 24px; margin-right: 15px; fill: currentColor; }
 .contact-links a { color: #FFC107; text-decoration: none; font-weight: 500; }
 .contact-links a:hover { text-decoration: underline; }
-
-/* --- TELA DE CARREGAMENTO (LOADING SCREEN) --- */
-@keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-.loading-container { width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-image: url('images/background.jpg'); background-size: cover; background-position: center center; animation: fadeIn 0.8s ease-in-out; }
-.loading-caricature { width: 220px; height: 220px; border-radius: 50%; border: 6px solid #FFC107; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 2rem; }
-.loading-text { font-size: 2.5rem; color: #fff; text-shadow: 2px 2px 8px rgba(0,0,0,0.8); background-color: rgba(0, 0, 0, 0.6); padding: 10px 30px; border-radius: 15px; }
-
 
 @media screen and (max-width: 768px) {
     .logo-name { font-size: 2.5rem; }
