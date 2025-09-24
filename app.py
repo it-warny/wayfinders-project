@@ -59,7 +59,8 @@ class Memory(db.Model):
 # --- CALLBACK ---
 @login_manager.user_loader
 def load_user(user_id):
-    return db.session.get(User, int(user_id))
+    # CORREÇÃO: Usando a sintaxe antiga e mais compatível
+    return User.query.get(int(user_id))
 
 # --- ROTAS ---
 @app.route('/')
@@ -137,7 +138,8 @@ def add_memory():
 @app.route('/edit-memory/<int:memory_id>', methods=['GET', 'POST'])
 @login_required
 def edit_memory(memory_id):
-    memory = db.get_or_4_04(Memory, memory_id)
+    # CORREÇÃO: Usando a sintaxe antiga e mais compatível
+    memory = Memory.query.get_or_404(memory_id)
     if request.method == 'POST':
         memory.title = request.form['title']
         memory.date = datetime.strptime(request.form['event_date'], '%Y-%m-%d').date()
@@ -150,7 +152,8 @@ def edit_memory(memory_id):
 @app.route('/delete-memory/<int:memory_id>', methods=['POST'])
 @login_required
 def delete_memory(memory_id):
-    memory = db.get_or_404(Memory, memory_id)
+    # CORREÇÃO: Usando a sintaxe antiga e mais compatível
+    memory = Memory.query.get_or_404(memory_id)
     db.session.delete(memory)
     db.session.commit()
     flash('Memória apagada.', 'info')
