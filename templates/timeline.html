@@ -2,13 +2,11 @@
 {% block title %}Nossa Trilha de Memórias{% endblock %}
 
 {% block content %}
-
 <div class="text-center">
     <div class="page-title-container">
         <h1 class="text-center">Nossa Trilha de Memórias</h1>
     </div>
 </div>
-
 <div class="timeline-container mt-5">
     {% for memory in memories %}
         <div class="timeline-item {{ loop.cycle('left', 'right') }}">
