@@ -41,9 +41,27 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 /* --- GALERIA CUSTOMIZADA (LIGHTGALLERY) --- */
 .lg-backdrop { background-color: rgba(0, 0, 0, 0.8) !important; backdrop-filter: blur(5px); }
 .lg-toolbar { background-color: rgba(30, 30, 30, 0.85) !important; }
-.lg-sub-html { background-color: rgba(30, 30, 30, 0.85) !important; text-align: left !important; padding: 20px 25px !important; }
-.lg-sub-html h4 { color: #FFC107; font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; }
-.lg-sub-html p { color: #f8f9fa; font-size: 1rem; line-height: 1.6; margin-bottom: 0; } /* <-- CORREÇÃO: 'white-space: pre-wrap;' removido */
+/* ALTERAÇÕES ABAIXO */
+.lg-sub-html {
+    background-color: rgba(30, 30, 30, 0.85) !important;
+    text-align: center !important; /* ALTERADO: Centraliza o texto */
+    padding: 15px 25px !important; /* ALTERADO: Padding vertical um pouco menor */
+    max-height: 25vh; /* NOVO: Limita a altura máxima da caixa de texto */
+    overflow-y: auto; /* NOVO: Adiciona scroll se o texto for muito longo */
+}
+.lg-sub-html h4 {
+    color: #FFC107;
+    font-size: 1.2rem; /* ALTERADO: Título menor */
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.lg-sub-html p {
+    color: #f8f9fa;
+    font-size: 0.9rem; /* ALTERADO: Descrição menor */
+    line-height: 1.5; /* ALTERADO: Altura da linha ajustada */
+    margin-bottom: 0;
+}
+/* FIM DAS ALTERAÇÕES */
 .lg-next, .lg-prev { background-color: rgba(30, 30, 30, 0.7) !important; border-radius: 50%; }
 .lg-next:hover, .lg-prev:hover { background-color: rgba(255, 193, 7, 0.8) !important; color: #fff !important; }
 
