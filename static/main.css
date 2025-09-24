@@ -41,25 +41,22 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 /* --- GALERIA CUSTOMIZADA (LIGHTGALLERY) --- */
 .lg-backdrop { background-color: rgba(0, 0, 0, 0.8) !important; backdrop-filter: blur(5px); }
 .lg-toolbar { background-color: rgba(30, 30, 30, 0.85) !important; }
-/* ALTERAÇÕES ABAIXO */
+/* ALTERAÇÕES FINAIS ABAIXO */
 .lg-sub-html {
     background-color: rgba(30, 30, 30, 0.85) !important;
-    text-align: center !important; /* ALTERADO: Centraliza o texto */
-    padding: 15px 25px !important; /* ALTERADO: Padding vertical um pouco menor */
-    max-height: 25vh; /* NOVO: Limita a altura máxima da caixa de texto */
-    overflow-y: auto; /* NOVO: Adiciona scroll se o texto for muito longo */
+    text-align: center !important;
+    padding: 10px 25px !important; /* Padding vertical reduzido */
 }
 .lg-sub-html h4 {
-    color: #FFC107;
-    font-size: 1.2rem; /* ALTERADO: Título menor */
-    font-weight: 700;
-    margin-bottom: 10px;
+    display: none; /* NOVO: Esconde o título (h4) completamente */
 }
 .lg-sub-html p {
     color: #f8f9fa;
-    font-size: 0.9rem; /* ALTERADO: Descrição menor */
-    line-height: 1.5; /* ALTERADO: Altura da linha ajustada */
-    margin-bottom: 0;
+    font-size: 0.85rem; /* Fonte ainda menor */
+    line-height: 1.5;   /* Altura da linha para cálculo */
+    margin: 0 auto;
+    max-height: 4.5em;  /* NOVO: Limita a altura para no máximo 3 linhas (1.5 * 3) */
+    overflow: hidden;   /* NOVO: Esconde o texto que passar do limite, sem barra de rolagem */
 }
 /* FIM DAS ALTERAÇÕES */
 .lg-next, .lg-prev { background-color: rgba(30, 30, 30, 0.7) !important; border-radius: 50%; }
