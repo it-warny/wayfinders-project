@@ -2,35 +2,35 @@
 {% block title %}Nossa Trilha de Memórias{% endblock %}
 
 {% block content %}
-<h1 class="text-center mb-5">Nossa Trilha de Memórias</h1>
-<div class="timeline-container">
+<div class="text-center">
+    <div class="page-title-container">
+        <h1 class="text-center">Nossa Trilha de Memórias</h1>
+    </div>
+</div>
+
+<div class="timeline-container mt-5">
     {% for memory in memories %}
         <div class="timeline-item {{ loop.cycle('left', 'right') }}">
             <div class="card text-white">
-
-                <!-- O card agora terá um ID único para a galeria -->
                 <div id="gallery-{{ memory.id }}">
-
-                    <!-- 1. Mostra apenas a PRIMEIRA imagem como capa -->
                     {% if memory.media_items %}
-                        {% set first_item = memory.media_items[0] %}
+                        {% for item in memory.media_items %}
+                            <!-- LEGENDA CORRIGIDA AQUI -->
+                            <a href="{{ item.url }}"
+                               data-sub-html="<h4>{{ memory.title }}</h4><p>{{ memory.description | nl2br }}</p>"
+                               {% if loop.index > 1 %}style="display:none;"{% endif %}>
 
-                        <!-- A imagem de capa agora é o gatilho para a galeria -->
-                        <a href="{{ first_item.url }}">
-                            {% if first_item.media_type == 'video' %}
-                                <img src="{{ first_item.url.replace('.mp4', '.jpg') }}" class="card-img-top" alt="Capa da memória">
-                            {% else %}
-                                <img src="{{ first_item.url.replace('/upload/', '/upload/w_600,c_limit/') }}" class="card-img-top" alt="Capa da memória">
-                            {% endif %}
-                        </a>
+                                {% if loop.index == 1 %}
+                                    {% if item.media_type == 'video' %}
+                                        <img src="{{ item.url.replace('.mp4', '.jpg') }}" class="card-img-top" alt="Capa da memória">
+                                    {% else %}
+                                        <img src="{{ item.url.replace('/upload/', '/upload/w_600,c_limit/') }}" class="card-img-top" alt="Capa da memória">
+                                    {% endif %}
+                                {% endif %}
+                            </a>
+                        {% endfor %}
                     {% endif %}
-
-                    <!-- 2. Esconde as OUTRAS mídias, que só aparecerão na galeria -->
-                    {% for item in memory.media_items[1:] %}
-                        <a href="{{ item.url }}" style="display:none;"></a>
-                    {% endfor %}
                 </div>
-
                 <div class="card-body">
                     <h5 class="card-title">{{ memory.title }}</h5>
                 </div>
@@ -51,12 +51,13 @@
 
 {% block scripts %}
 <script>
-    // Este script encontra cada memória e ativa a galeria nela
     document.addEventListener('DOMContentLoaded', function() {
         {% for memory in memories %}
             lightGallery(document.getElementById('gallery-{{ memory.id }}'), {
                 selector: 'a',
-                download: false // Desativa o botão de download na galeria
+                download: false,
+                plugins: [lgVideo],
+                licenseKey: '0000-0000-000-0000'
             });
         {% endfor %}
     });
