@@ -14,3 +14,8 @@ __pycache__/
 # Arquivos de banco de dados locais
 *.db
 *.sqlite3
+
+# Scripts de gerenciamento do banco de dados
+create_users.py
+reset_passwords.py
+change_password.py
