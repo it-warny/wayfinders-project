@@ -10,6 +10,8 @@ from datetime import datetime
 import cloudinary
 import cloudinary.uploader
 import time
+# NOVO: Importações para criar o filtro customizado
+from markupsafe import escape, Markup
 
 # --- CONFIGURAÇÃO ---
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -25,6 +27,16 @@ cloudinary.config(
     api_key=os.environ.get('CLOUDINARY_API_KEY'),
     api_secret=os.environ.get('CLOUDINARY_API_SECRET')
 )
+
+# --- NOVO: FILTRO CUSTOMIZADO NL2BR ---
+# Esta função pega um texto e substitui as quebras de linha (\n) por tags <br> do HTML
+@app.template_filter()
+def nl2br(value):
+    if value is None:
+        return ''
+    # Escapamos o texto para segurança e depois aplicamos a substituição
+    escaped_text = escape(value)
+    return Markup(escaped_text.replace('\n', '<br>\n'))
 
 # --- MAPEAMENTO DE CARICATURAS ---
 USER_CARICATURES = {
@@ -59,7 +71,6 @@ class Memory(db.Model):
 # --- CALLBACK ---
 @login_manager.user_loader
 def load_user(user_id):
-    # CORREÇÃO: Usando a sintaxe antiga e mais compatível
     return User.query.get(int(user_id))
 
 # --- ROTAS ---
@@ -138,7 +149,6 @@ def add_memory():
 @app.route('/edit-memory/<int:memory_id>', methods=['GET', 'POST'])
 @login_required
 def edit_memory(memory_id):
-    # CORREÇÃO: Usando a sintaxe antiga e mais compatível
     memory = Memory.query.get_or_404(memory_id)
     if request.method == 'POST':
         memory.title = request.form['title']
@@ -152,7 +162,6 @@ def edit_memory(memory_id):
 @app.route('/delete-memory/<int:memory_id>', methods=['POST'])
 @login_required
 def delete_memory(memory_id):
-    # CORREÇÃO: Usando a sintaxe antiga e mais compatível
     memory = Memory.query.get_or_404(memory_id)
     db.session.delete(memory)
     db.session.commit()
@@ -160,7 +169,6 @@ def delete_memory(memory_id):
     return redirect(url_for('timeline'))
 
 # --- EXECUÇÃO ---
-# DEIXE ASSIM:
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
