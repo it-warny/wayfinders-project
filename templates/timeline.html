@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Nossa Trilha de Memórias{% endblock %}
+
 {% block content %}
 <h1 class="text-center mb-5">Nossa Trilha de Memórias</h1>
 <div class="timeline-container">
@@ -42,7 +43,12 @@
         </div>
     </div>
 </div>
+
 {% endblock %}
+
 {% block scripts %}
 <script>
-$('#lightboxModal').on('show.bs.modal', function (event) { var el = $(event.relatedTarget), modal = $(this), mediaContainer = modal.find('#lightbox-media-
+$('#lightboxModal').on('show.bs.modal', function (event) { var el = $(event.relatedTarget), modal = $(this), mediaContainer = modal.find('#lightbox-media-container'); modal.find('.modal-title').text(el.data('title')); modal.find('#lightbox-description').text(el.data('description')); mediaContainer.empty(); if (el.data('media-type') === 'image') mediaContainer.html('<img src="' + el.data('media-url') + '" id="lightbox-media" class="img-fluid">'); else if (el.data('media-type') === 'video') mediaContainer.html('<video src="' + el.data('media-url') + '" id="lightbox-media" class="img-fluid" controls autoplay></video>'); });
+$('#lightboxModal').on('hidden.bs.modal', function (e) { $(this).find('#lightbox-media-container').empty(); });
+</script>
+{% endblock %}
