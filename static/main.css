@@ -36,14 +36,25 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .timeline-item .card-title { margin-bottom: 0; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .timeline-item .card-footer { background-color: transparent; border-top: 1px solid rgba(255,255,255,0.1); }
 
-/* --- MODAL (LIGHTBOX) --- */
-.modal-content { background-color: #212529; border: 1px solid rgba(255, 255, 255, 0.2); }
-.modal-header { border-bottom: 1px solid rgba(255, 255, 255, 0.2); text-align: center; display: block; position: relative; }
-.modal-title { width: 100%; }
-.custom-close-btn { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); padding: 0; border: none; background: none; cursor: pointer; font-size: 2.5rem; font-weight: 700; color: #dc3545; line-height: 1; opacity: 0.75; transition: opacity 0.2s ease-in-out; }
-.custom-close-btn:hover { opacity: 1; color: #a71d2a; }
-#lightbox-media { max-width: 90vw; max-height: 80vh; display: block; margin: 0 auto; object-fit: contain; }
-#lightbox-description { white-space: pre-wrap; margin-top: 15px; }
+/* --- GALERIA CUSTOMIZADA (LIGHTGALLERY) --- */
+.lg-backdrop { background-color: rgba(0, 0, 0, 0.8) !important; backdrop-filter: blur(5px); }
+.lg-toolbar { background-color: rgba(30, 30, 30, 0.85) !important; }
+.lg-sub-html { background-color: rgba(30, 30, 30, 0.85) !important; text-align: left !important; padding: 20px 25px !important; }
+.lg-sub-html h4 { color: #FFC107; font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; }
+.lg-sub-html p { color: #f8f9fa; font-size: 1rem; line-height: 1.6; margin-bottom: 0; white-space: pre-wrap; }
+.lg-next, .lg-prev { background-color: rgba(30, 30, 30, 0.7) !important; border-radius: 50%; }
+.lg-next:hover, .lg-prev:hover { background-color: rgba(255, 193, 7, 0.8) !important; color: #fff !important; }
+
+/* Ajuste para controlar o tamanho da mídia na galeria */
+.lg-image {
+    max-height: 75vh !important;
+    max-width: 90vw !important;
+    object-fit: contain;
+}
+.lg-video-cont {
+    max-height: 75vh !important;
+    max-width: 90vw !important;
+}
 
 /* --- NOVAS SEÇÕES DA HOMEPAGE --- */
 .content-section { padding: 40px 0; color: #f8f9fa; }
@@ -59,57 +70,6 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .contact-links a:hover { text-decoration: underline; }
 
 @media screen and (max-width: 768px) {
-    /* ... (regras de responsividade) ... */
-}
-/* ... (todo o seu css anterior vem aqui, sem nenhuma alteração) ... */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
-body { font-family: 'Poppins', sans-serif; background-image: url('images/background.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: fixed; min-height: 100vh; color: #adb5bd; }
-/* ... */
-
-/* --- TELA DE CARREGAMENTO (LOADING SCREEN) --- */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.loading-container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-image: url('images/background.jpg');
-    background-size: cover;
-    background-position: center center;
-    animation: fadeIn 0.8s ease-in-out;
-}
-
-.loading-caricature {
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    border: 6px solid #FFC107;
-    object-fit: cover;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    margin-bottom: 2rem;
-}
-
-.loading-text {
-    font-size: 2.5rem;
-    color: #fff;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 10px 30px;
-    border-radius: 15px;
-}
-
-/* ... (todo o CSS anterior se mantém igual até o final) ... */
-
-/* --- NOVAS SEÇÕES DA HOMEPAGE --- */
-/* ... (seções da homepage sem alterações) ... */
-
-@media screen and (max-width: 768px) {
     .logo-name { font-size: 2.5rem; }
     .user-presence { display: none !important; }
     .timeline-container::after { left: 31px; }
@@ -120,28 +80,12 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
     .login-container { width: 90vw; height: 90vw; }
 }
 
-/* NOVO: Regras para telas muito grandes (TVs, monitores ultrawide) */
 @media screen and (min-width: 1800px) {
-    .logo-name {
-        font-size: 5rem;
-    }
-    .timeline-item .card {
-        max-width: 450px;
-    }
-    .timeline-item .card-title {
-        font-size: 1.1rem;
-    }
-    .loading-caricature {
-        width: 280px;
-        height: 280px;
-    }
-    .loading-text {
-        font-size: 3rem;
-    }
-    .section-title {
-        font-size: 2.5rem;
-    }
-    .section-text {
-        font-size: 1.2rem;
-    }
+    .logo-name { font-size: 5rem; }
+    .timeline-item .card { max-width: 450px; }
+    .timeline-item .card-title { font-size: 1.1rem; }
+    .loading-caricature { width: 280px; height: 280px; }
+    .loading-text { font-size: 3rem; }
+    .section-title { font-size: 2.5rem; }
+    .section-text { font-size: 1.2rem; }
 }

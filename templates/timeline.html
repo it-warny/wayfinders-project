@@ -2,20 +2,35 @@
 {% block title %}Nossa Trilha de Memórias{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <div class="page-title-container">
-        <h1 class="text-center">Nossa Trilha de Memórias</h1>
-    </div>
-</div>
-<div class="timeline-container mt-5">
+<h1 class="text-center mb-5">Nossa Trilha de Memórias</h1>
+<div class="timeline-container">
     {% for memory in memories %}
         <div class="timeline-item {{ loop.cycle('left', 'right') }}">
             <div class="card text-white">
-                {% if memory.media_url %}
-                    {% if memory.media_type == 'video' %}<img src="{{ memory.media_url.replace('.mp4', '.jpg') }}" class="card-img-top" alt="Miniatura" data-toggle="modal" data-target="#lightboxModal" data-media-type="video" data-media-url="{{ memory.media_url }}" data-title="{{ memory.title }}" data-description="{{ memory.description }}">
-                    {% else %}<img src="{{ memory.media_url.replace('/upload/', '/upload/w_600,c_limit/') }}" class="card-img-top" alt="{{ memory.title }}" data-toggle="modal" data-target="#lightboxModal" data-media-type="image" data-media-url="{{ memory.media_url }}" data-title="{{ memory.title }}" data-description="{{ memory.description }}">
+
+                <!-- O card agora terá um ID único para a galeria -->
+                <div id="gallery-{{ memory.id }}">
+
+                    <!-- 1. Mostra apenas a PRIMEIRA imagem como capa -->
+                    {% if memory.media_items %}
+                        {% set first_item = memory.media_items[0] %}
+
+                        <!-- A imagem de capa agora é o gatilho para a galeria -->
+                        <a href="{{ first_item.url }}">
+                            {% if first_item.media_type == 'video' %}
+                                <img src="{{ first_item.url.replace('.mp4', '.jpg') }}" class="card-img-top" alt="Capa da memória">
+                            {% else %}
+                                <img src="{{ first_item.url.replace('/upload/', '/upload/w_600,c_limit/') }}" class="card-img-top" alt="Capa da memória">
+                            {% endif %}
+                        </a>
                     {% endif %}
-                {% endif %}
+
+                    <!-- 2. Esconde as OUTRAS mídias, que só aparecerão na galeria -->
+                    {% for item in memory.media_items[1:] %}
+                        <a href="{{ item.url }}" style="display:none;"></a>
+                    {% endfor %}
+                </div>
+
                 <div class="card-body">
                     <h5 class="card-title">{{ memory.title }}</h5>
                 </div>
@@ -32,26 +47,19 @@
         <div class="alert alert-info"><strong>A estrada começa aqui!</strong> Clique em "Adicionar Memória" para criar nossa primeira parada.</div>
     {% endfor %}
 </div>
-
-<div class="modal fade" id="lightboxModal" tabindex="-1" role="dialog" aria-labelledby="lightboxModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h5 class="modal-title w-100" id="lightbox-title"></h5>
-                <button type="button" class="custom-close-btn" data-dismiss="modal" aria-label="Close">&times;</button>
-            </div>
-            <div class="modal-body text-center">
-                <div id="lightbox-media-container"></div>
-                <p id="lightbox-description" class="mt-3 text-left"></p>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-$('#lightboxModal').on('show.bs.modal', function (event) { var el = $(event.relatedTarget), modal = $(this), mediaContainer = modal.find('#lightbox-media-container'); modal.find('.modal-title').text(el.data('title')); modal.find('#lightbox-description').text(el.data('description')); mediaContainer.empty(); if (el.data('media-type') === 'image') mediaContainer.html('<img src="' + el.data('media-url') + '" id="lightbox-media" class="img-fluid">'); else if (el.data('media-type') === 'video') mediaContainer.html('<video src="' + el.data('media-url') + '" id="lightbox-media" class="img-fluid" controls autoplay></video>'); });
-$('#lightboxModal').on('hidden.bs.modal', function (e) { $(this).find('#lightbox-media-container').empty(); });
+    // Este script encontra cada memória e ativa a galeria nela
+    document.addEventListener('DOMContentLoaded', function() {
+        {% for memory in memories %}
+            lightGallery(document.getElementById('gallery-{{ memory.id }}'), {
+                selector: 'a',
+                download: false // Desativa o botão de download na galeria
+            });
+        {% endfor %}
+    });
 </script>
 {% endblock %}
+
