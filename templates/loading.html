@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrando...</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}?v={{ cache_id }}">
+
+    <script>
+        // Este script redireciona para a timeline após 3500 milissegundos (3.5 segundos)
+        setTimeout(function() {
+            window.location.href = "{{ url_for('timeline') }}";
+        }, 3500);
+    </script>
+</head>
+<body>
+
+    <div class="loading-container">
+        <img src="{{ url_for('static', filename=caricature_path) }}" alt="Caricatura de {{ username }}" class="loading-caricature">
+        <h1 class="loading-text">{{ username }} chegando...</h1>
+    </div>
+
+</body>
+</html>
