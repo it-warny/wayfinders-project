@@ -43,7 +43,7 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .lg-toolbar { background-color: rgba(30, 30, 30, 0.85) !important; }
 .lg-sub-html { background-color: rgba(30, 30, 30, 0.85) !important; text-align: left !important; padding: 20px 25px !important; }
 .lg-sub-html h4 { color: #FFC107; font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; }
-.lg-sub-html p { color: #f8f9fa; font-size: 1rem; line-height: 1.6; margin-bottom: 0; white-space: pre-wrap; }
+.lg-sub-html p { color: #f8f9fa; font-size: 1rem; line-height: 1.6; margin-bottom: 0; } /* <-- CORREÇÃO: 'white-space: pre-wrap;' removido */
 .lg-next, .lg-prev { background-color: rgba(30, 30, 30, 0.7) !important; border-radius: 50%; }
 .lg-next:hover, .lg-prev:hover { background-color: rgba(255, 193, 7, 0.8) !important; color: #fff !important; }
 
