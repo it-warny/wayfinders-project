@@ -12,24 +12,45 @@
     {% for memory in memories %}
         <div class="timeline-item {{ loop.cycle('left', 'right') }}">
             <div class="card text-white">
+
                 <div id="gallery-{{ memory.id }}">
                     {% if memory.media_items %}
                         {% for item in memory.media_items %}
-                            <!-- LEGENDA CORRIGIDA AQUI -->
-                            <a href="{{ item.url }}"
-                               data-sub-html="<h4>{{ memory.title }}</h4><p>{{ memory.description | nl2br }}</p>"
-                               {% if loop.index > 1 %}style="display:none;"{% endif %}>
+                            {% if item.media_type == 'video' %}
+                                <a href="{{ item.url.replace('.mp4', '.jpg') }}"
+                                   data-lg-html="#video-{{ item.id }}"
+                                   data-sub-html="<p>{{ memory.description | nl2br }}</p>"
+                                   {% if loop.index > 1 %}style="display:none;"{% endif %}>
 
-                                {% if loop.index == 1 %}
-                                    {% if item.media_type == 'video' %}
-                                        <img src="{{ item.url.replace('.mp4', '.jpg') }}" class="card-img-top" alt="Capa da memória">
-                                    {% else %}
+                                    {% if loop.index == 1 %}
+                                        <img src="{{ item.url.replace('.mp4', '.jpg') }}" class="card-img-top" alt="Capa da memória em vídeo">
+                                    {% endif %}
+                                </a>
+                            {% else %}
+                                <a href="{{ item.url }}"
+                                   data-sub-html="<p>{{ memory.description | nl2br }}</p>"
+                                   {% if loop.index > 1 %}style="display:none;"{% endif %}>
+
+                                    {% if loop.index == 1 %}
                                         <img src="{{ item.url.replace('/upload/', '/upload/w_600,c_limit/') }}" class="card-img-top" alt="Capa da memória">
                                     {% endif %}
-                                {% endif %}
-                            </a>
+                                </a>
+                            {% endif %}
                         {% endfor %}
                     {% endif %}
+                </div>
+
+                <div style="display:none;">
+                    {% for item in memory.media_items %}
+                        {% if item.media_type == 'video' %}
+                            <div id="video-{{ item.id }}">
+                                <video class="lg-video-object lg-html5" controls preload="auto" style="width:100%">
+                                    <source src="{{ item.url }}" type="video/mp4">
+                                    Seu navegador não suporta a tag de vídeo.
+                                </video>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ memory.title }}</h5>
@@ -63,4 +84,3 @@
     });
 </script>
 {% endblock %}
-
