@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
 body { font-family: 'Poppins', sans-serif; background-image: url('images/background.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: fixed; min-height: 100vh; color: #adb5bd; }
 
-/* ... (todo o CSS anterior permanece igual até a seção da galeria) ... */
-
 /* --- NAVBAR --- */
 .navbar { background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); height: 70px; }
 .navbar-brand { font-size: 1rem; }
@@ -40,60 +38,39 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .timeline-item .card-title { margin-bottom: 0; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .timeline-item .card-footer { background-color: transparent; border-top: 1px solid rgba(255,255,255,0.1); }
 
+/* --- SEÇÃO DA LIGHTGALLERY REMOVIDA --- */
 
-/* --- GALERIA CUSTOMIZADA (LIGHTGALLERY) --- */
-.lg-backdrop { background-color: rgba(0, 0, 0, 0.8) !important; backdrop-filter: blur(5px); }
-.lg-toolbar { background-color: rgba(30, 30, 30, 0.85) !important; }
-.lg-sub-html {
-    background-color: rgba(30, 30, 30, 0.85) !important;
-    text-align: center !important;
-    padding: 10px 25px !important;
+/* NOVO: Estilos para o Modal de Mídia (Bootstrap) */
+.media-modal .modal-content {
+    background-color: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
-.lg-sub-html p {
-    color: #f8f9fa;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    margin: 0 auto;
-    max-height: 4.5em;
-    overflow: hidden;
+.media-modal .modal-header, .media-modal .modal-footer {
+    border-color: rgba(255, 255, 255, 0.2);
 }
-.lg-next, .lg-prev { background-color: rgba(30, 30, 30, 0.7) !important; border-radius: 50%; }
-.lg-next:hover, .lg-prev:hover { background-color: rgba(255, 193, 7, 0.8) !important; color: #fff !important; }
-
-/* NOVO: Estilo para nosso botão de play customizado */
-.custom-play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70px;
-    height: 70px;
-    background: rgba(0, 0, 0, 0.6);
+.media-modal .modal-body {
+    padding: 0;
+}
+.media-modal .carousel-item img,
+.media-modal .carousel-item video {
+    max-height: 80vh;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+.media-modal .close {
+    color: white;
+    opacity: 0.9;
+    text-shadow: none;
+}
+.media-modal .carousel-control-prev-icon,
+.media-modal .carousel-control-next-icon {
+    background-color: rgba(0,0,0,0.5);
     border-radius: 50%;
-    border: 2px solid white;
-    cursor: pointer;
-    z-index: 1085; /* Acima da imagem, abaixo dos controles da galeria */
-    display: none; /* Escondido por padrão */
-    transition: all 0.2s ease;
+    padding: 20px;
 }
-.custom-play-button:hover {
-    background: rgba(255, 193, 7, 0.8);
-}
-.custom-play-button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 55%;
-    transform: translate(-50%, -50%);
-    width: 0;
-    height: 0;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-    border-left: 22px solid white;
-}
-/* --- FIM DO NOVO ESTILO --- */
 
-/* ... (O resto do CSS continua igual) ... */
 /* --- TELA DE CARREGAMENTO (LOADING SCREEN) --- */
 @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 .loading-container { width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-image: url('images/background.jpg'); background-size: cover; background-position: center center; animation: fadeIn 0.8s ease-in-out; }
