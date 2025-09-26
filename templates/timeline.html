@@ -13,26 +13,31 @@
         <div class="timeline-item {{ loop.cycle('left', 'right') }}">
             <div class="card text-white">
 
-                {% if memory.media_items %}
-                    {% set first_item = memory.media_items[0] %}
+                <div class="gallery-container" id="gallery-{{ memory.id }}">
+                    {% if memory.media_items %}
+                        {% for item in memory.media_items %}
+                            {% if item.media_type == 'video' %}
+                                <a href="{{ item.url }}"
+                                   data-sub-html="<p>{{ memory.description | nl2br }}</p>"
+                                   {% if loop.index > 1 %}style="display:none;"{% endif %}>
 
-                    {% if first_item.media_type == 'video' %}
-                        <a href="#" data-toggle="modal" data-target="#videoModal-{{ memory.id }}" class="video-thumb">
-                            <img src="{{ first_item.url.replace('.mp4', '.jpg') }}" class="card-img-top" alt="Capa da memória">
-                        </a>
+                                    {% if loop.index == 1 %}
+                                        <img src="{{ item.url.replace('.mp4', '.jpg') }}" class="card-img-top" alt="Capa da memória em vídeo">
+                                    {% endif %}
+                                </a>
+                            {% else %}
+                                <a href="{{ item.url }}"
+                                   data-sub-html="<p>{{ memory.description | nl2br }}</p>"
+                                   {% if loop.index > 1 %}style="display:none;"{% endif %}>
 
-                    {% else %}
-                        <div class="gallery-container" id="gallery-{{ memory.id }}">
-                            {% for item in memory.media_items %}
-                                <a href="{{ item.url }}" data-sub-html="<p>{{ memory.description | nl2br }}</p>" {% if loop.index > 1 %}style="display:none;"{% endif %}>
                                     {% if loop.index == 1 %}
                                         <img src="{{ item.url.replace('/upload/', '/upload/w_600,c_limit/') }}" class="card-img-top" alt="Capa da memória">
                                     {% endif %}
                                 </a>
-                            {% endfor %}
-                        </div>
+                            {% endif %}
+                        {% endfor %}
                     {% endif %}
-                {% endif %}
+                </div>
 
                 <div class="card-body">
                     <h5 class="card-title">{{ memory.title }}</h5>
@@ -45,31 +50,6 @@
                     </div>
                 </div>
             </div>
-
-            {% if memory.media_items and memory.media_items[0].media_type == 'video' %}
-                <div class="modal fade" id="videoModal-{{ memory.id }}" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content bg-dark">
-                            <div class="modal-header border-secondary">
-                                <h5 class="modal-title text-white">{{ memory.title }}</h5>
-                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body p-0">
-                                <video controls preload="auto" style="width: 100%;" class="video-player">
-                                    <source src="{{ memory.media_items[0].url }}" type="video/mp4">
-                                    Seu navegador não suporta a tag de vídeo.
-                                </video>
-                            </div>
-                            <div class="modal-footer border-secondary">
-                                <p class="text-left w-100 text-light">{{ memory.description | nl2br }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-
         </div>
     {% else %}
         <div class="alert alert-info"><strong>A estrada começa aqui!</strong> Clique em "Adicionar Memória" para criar nossa primeira parada.</div>
@@ -79,25 +59,18 @@
 
 {% block scripts %}
 <script>
-$(document).ready(function() {
-    // Inicializa a lightGallery APENAS para os containers de imagem
-    $('.gallery-container').each(function() {
-        $(this).lightGallery({
-            selector: 'a',
-            download: false,
-            plugins: [lgZoom],
-            zoom: false
+    document.addEventListener('DOMContentLoaded', function() {
+        // Itera sobre cada container de galeria
+        const galleryContainers = document.querySelectorAll('.gallery-container');
+        galleryContainers.forEach(container => {
+            lightGallery(container, {
+                // SCRIPT DE INICIALIZAÇÃO CORRIGIDO
+                plugins: [lgVideo],         // CORREÇÃO: Removido o 'lgZoom' que causava o erro
+                selector: 'a',
+                download: false,
+                zoom: false                 // Esta linha é a forma correta de desativar o zoom
+            });
         });
     });
-
-    // Adiciona um evento para PARAR o vídeo quando o modal do Bootstrap for fechado
-    $('.modal').on('hidden.bs.modal', function () {
-        var video = $(this).find('.video-player').get(0);
-        if (video) {
-            video.pause();
-            video.currentTime = 0; // Opcional: rebobina o vídeo para o início
-        }
-    });
-});
 </script>
 {% endblock %}
