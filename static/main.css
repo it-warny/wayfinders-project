@@ -88,35 +88,35 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
     text-shadow: none;
 }
 
-/* NOVO: Estilos para as novas setas do carrossel */
+/* Estilos para as áreas clicáveis das setas */
 .carousel-control-prev,
 .carousel-control-next {
-    width: 5%; /* Ajusta a largura da área clicável */
-    opacity: 1; /* Garante que estejam sempre visíveis */
+    width: 8%; /* Aumenta um pouco a área clicável */
+    opacity: 1;
     transition: opacity 0.15s ease;
+    /* NOVO: Flexbox para centralizar o ícone */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .carousel-control-prev:hover,
 .carousel-control-next:hover {
-    opacity: 0.7; /* Suave efeito hover */
+    opacity: 0.7;
 }
 
 /* Estiliza os caracteres unicode das setas */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    font-size: 3rem; /* Tamanho maior para as setas */
-    color: white; /* Cor branca para as setas */
-    text-shadow: 0 0 5px rgba(0,0,0,0.8); /* Uma leve sombra para destaque */
-    line-height: 1; /* Ajuste fino do alinhamento vertical */
-    display: flex; /* Para centralizar o caractere */
-    align-items: center; /* Centraliza verticalmente */
-    justify-content: center; /* Centraliza horizontalmente */
-    background: none; /* Remove qualquer background padrão */
-    opacity: 1; /* Garante visibilidade total */
+    font-size: 3rem;
+    color: white;
+    text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    line-height: 1;
+    background: none;
+    opacity: 1;
+    /* REMOVIDO: justify-content e margin-left, pois a área pai já centralizará */
+    /* REMOVIDO: display: flex; pois já está na área pai */
 }
-/* Alinhamento específico para a seta da direita */
-.carousel-control-next-icon {
-    margin-left: auto; /* Empurra para a direita */
-}
+
 
 /* --- TELA DE CARREGAMENTO (LOADING SCREEN) --- */
 @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
@@ -154,7 +154,6 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
         height: 100vh;
         border-radius: 0;
     }
-    /* NOVO: Ajusta o tamanho das setas em telas pequenas */
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
         font-size: 2rem;
