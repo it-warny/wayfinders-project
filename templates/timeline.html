@@ -18,8 +18,7 @@
                         {% for item in memory.media_items %}
                             {% if item.media_type == 'video' %}
                                 <a href="{{ item.url.replace('.mp4', '.jpg') }}"
-                                   data-video='{"source": [{"src":"{{ item.url }}", "type":"video/mp4"}], "attributes": {"preload": "auto", "playsinline": true, "controls": true}}'
-                                   data-sub-html="<p>{{ memory.description | nl2br }}</p>"
+                                   data-lg-html="#video-player-{{ item.id }}"
                                    {% if loop.index > 1 %}style="display:none;"{% endif %}>
 
                                     {% if loop.index == 1 %}
@@ -38,6 +37,22 @@
                             {% endif %}
                         {% endfor %}
                     {% endif %}
+                </div>
+
+                <div style="display:none;">
+                    {% for item in memory.media_items %}
+                        {% if item.media_type == 'video' %}
+                            <div id="video-player-{{ item.id }}">
+                                <video class="lg-video-object lg-html5" preload="auto" style="width:100%">
+                                    <source src="{{ item.url }}" type="video/mp4">
+                                    Seu navegador não suporta a tag de vídeo.
+                                </video>
+                                <div class="lg-sub-html">
+                                     <p>{{ memory.description | nl2br }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
 
                 <div class="card-body">
@@ -61,15 +76,47 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Itera sobre cada container de galeria
         const galleryContainers = document.querySelectorAll('.gallery-container');
         galleryContainers.forEach(container => {
-            lightGallery(container, {
-                // SCRIPT DE INICIALIZAÇÃO SIMPLIFICADO E CORRIGIDO
-                plugins: [lgVideo, lgZoom], // Carrega os plugins necessários
+            // Inicializa a galeria e guarda a instância
+            const lg = lightGallery(container, {
                 selector: 'a',
                 download: false,
-                zoom: false // Desativa explicitamente a função de zoom
+                plugins: [lgZoom], // Apenas o plugin de zoom (para podermos desativar)
+                zoom: false,       // Desativa o zoom
+            });
+
+            // Adiciona o 'escutador' de eventos
+            container.addEventListener('lgAfterSlide', function (event) {
+                const { index } = event.detail;
+                const currentSlide = lg.getSlideItem(index); // Pega o elemento do slide atual
+
+                // Remove qualquer botão 'play' antigo de slides anteriores
+                const oldPlayButton = document.querySelector('.custom-play-button');
+                if (oldPlayButton) {
+                    oldPlayButton.remove();
+                }
+
+                const videoElement = currentSlide.querySelector('video');
+
+                // Se o slide atual contiver um vídeo
+                if (videoElement) {
+                    // Cria nosso botão 'play'
+                    const playButton = document.createElement('div');
+                    playButton.className = 'custom-play-button';
+
+                    // Adiciona o botão ao container do vídeo
+                    videoElement.parentNode.style.position = 'relative'; // Garante o posicionamento correto
+                    videoElement.parentNode.appendChild(playButton);
+                    playButton.style.display = 'block';
+
+                    // Define o que acontece ao clicar no botão 'play'
+                    playButton.addEventListener('click', function() {
+                        videoElement.play(); // Toca o vídeo
+                        videoElement.setAttribute('controls', 'true'); // Mostra os controles nativos
+                        playButton.remove(); // Remove nosso botão customizado
+                    }, { once: true }); // O evento só acontece uma vez
+                }
             });
         });
     });
