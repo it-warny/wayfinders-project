@@ -18,7 +18,7 @@
                         {% for item in memory.media_items %}
                             {% if item.media_type == 'video' %}
                                 <a href="{{ item.url.replace('.mp4', '.jpg') }}"
-                                   data-lg-html="#video-{{ item.id }}"
+                                   data-src="{{ item.url }}"
                                    data-sub-html="<p>{{ memory.description | nl2br }}</p>"
                                    {% if loop.index > 1 %}style="display:none;"{% endif %}>
 
@@ -38,19 +38,6 @@
                             {% endif %}
                         {% endfor %}
                     {% endif %}
-                </div>
-
-                <div style="display:none;">
-                    {% for item in memory.media_items %}
-                        {% if item.media_type == 'video' %}
-                            <div id="video-{{ item.id }}">
-                                <video class="lg-video-object lg-html5" controls preload="auto" style="width:100%">
-                                    <source src="{{ item.url }}" type="video/mp4">
-                                    Seu navegador não suporta a tag de vídeo.
-                                </video>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ memory.title }}</h5>
