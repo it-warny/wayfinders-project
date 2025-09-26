@@ -53,13 +53,16 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Encontra todos os containers de galeria na página
         const galleryContainers = document.querySelectorAll('.gallery-container');
+
+        // Itera sobre cada um e inicializa o lightGallery
         galleryContainers.forEach(container => {
             lightGallery(container, {
-                // Script Final e Estável
-                plugins: [lgVideo], // Carrega apenas o plugin de vídeo
-                selector: 'a',
-                download: false
+                selector: 'a',       // O que aciona a galeria são os links <a>
+                plugins: [lgVideo],  // Ativa o plugin de vídeo que está em base.html
+                download: false,     // Desativa o botão de download
+                // Não precisamos mexer em zoom ou outras coisas. O padrão já é o correto.
             });
         });
     });
