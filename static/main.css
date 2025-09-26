@@ -30,16 +30,13 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .timeline-container::after { content: ''; position: absolute; width: 6px; background-color: rgba(255, 255, 255, 0.2); top: 0; bottom: 0; left: 50%; margin-left: -3px; z-index: -1; }
 .timeline-item { padding: 10px 80px; position: relative; width: 50%; clear: both; float: left; }
 .timeline-item.right { float: right; }
-/* ALTERADO: Largura máxima do card aumentada */
 .timeline-item .card { background-color: rgba(30, 30, 30, 0.9) !important; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); max-width: 400px; }
-/* ALTERADO: Margem da esquerda aumentada para afastar o card */
 .timeline-item.left .card { margin-right: 80px; float: right; }
 .timeline-item.right .card { margin-left: 50px; float: left; }
-/* ALTERADO: Substituída altura fixa por proporção de tela para padronização */
 .timeline-item .card-img-top {
     cursor: pointer;
-    aspect-ratio: 4 / 3; /* Proporção de tela 4:3 */
-    object-fit: cover;   /* Garante que a imagem cubra o espaço sem distorcer */
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
 }
 .timeline-item .card-body { padding: 1rem 1.25rem; }
 .timeline-item .card-title { margin-bottom: 0; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -95,6 +92,18 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
     background-color: rgba(0,0,0,0.5);
     border-radius: 50%;
     padding: 20px;
+}
+
+/* NOVO: Garante que as setas do carrossel sempre tenham cor branca */
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+    color: white; /* Define a cor do ícone como branco */
+    font-size: 1.5rem; /* Ajusta o tamanho, se necessário */
+}
+/* E se for um SVG, garantimos que a cor do SVG seja branca */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1) grayscale(1) brightness(2); /* Tenta forçar branco para ícones SVG */
 }
 
 /* --- TELA DE CARREGAMENTO (LOADING SCREEN) --- */
