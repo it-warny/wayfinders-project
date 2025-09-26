@@ -18,8 +18,7 @@
                         {% for item in memory.media_items %}
                             {% if item.media_type == 'video' %}
                                 <a href="{{ item.url.replace('.mp4', '.jpg') }}"
-                                   data-lg-html="#video-{{ item.id }}"
-                                   data-sub-html="<p>{{ memory.description | nl2br }}</p>"
+                                   data-lg-html="#video-with-desc-{{ item.id }}"
                                    {% if loop.index > 1 %}style="display:none;"{% endif %}>
 
                                     {% if loop.index == 1 %}
@@ -43,11 +42,14 @@
                 <div style="display:none;">
                     {% for item in memory.media_items %}
                         {% if item.media_type == 'video' %}
-                            <div id="video-{{ item.id }}">
-                                <video class="lg-video-object lg-html5" controls preload="auto" style="width:100%">
+                            <div id="video-with-desc-{{ item.id }}">
+                                <video class="lg-video-object lg-html5" autoplay muted controls playsinline preload="auto" style="width:100%">
                                     <source src="{{ item.url }}" type="video/mp4">
                                     Seu navegador não suporta a tag de vídeo.
                                 </video>
+                                <div class="lg-sub-html">
+                                     <p>{{ memory.description | nl2br }}</p>
+                                </div>
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -59,8 +61,8 @@
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <span class="text-muted">{{ memory.date.strftime('%d/%m/%Y') }}</span>
                     <div>
-                        <a href="{{ url_for('edit_memory', memory_id=memory.id) }}" class="btn btn-link text-info p-0 mr-2" title="Editar"><svg xmlns="http://www.w.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zM-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg></a>
-                        <form action="{{ url_for('delete_memory', memory_id=memory.id) }}" method="POST" onsubmit="return confirm('Tem certeza?');" style="display: inline;"><button type="submit" class="btn btn-link text-danger p-0" title="Excluir"><svg xmlns="http://www.w.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/></svg></button></form>
+                        <a href="{{ url_for('edit_memory', memory_id=memory.id) }}" class="btn btn-link text-info p-0 mr-2" title="Editar"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zM-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg></a>
+                        <form action="{{ url_for('delete_memory', memory_id=memory.id) }}" method="POST" onsubmit="return confirm('Tem certeza?');" style="display: inline;"><button type="submit" class="btn btn-link text-danger p-0" title="Excluir"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/></svg></button></form>
                     </div>
                 </div>
             </div>
@@ -76,27 +78,13 @@
     document.addEventListener('DOMContentLoaded', function() {
         {% for memory in memories %}
             const galleryElement = document.getElementById('gallery-{{ memory.id }}');
-            // Inicializa a galeria e guarda a instância na variável 'lg'
-            const lg = lightGallery(galleryElement, {
+            lightGallery(galleryElement, {
                 selector: 'a',
                 download: false,
                 plugins: [lgVideo],
                 licenseKey: '0000-0000-000-0000'
             });
-
-            // NOVO: Adiciona um 'escutador' de eventos.
-            // Após cada slide (mídia) ser exibido na tela...
-            galleryElement.addEventListener('lgAfterSlide', function (event) {
-                const { index } = event.detail; // Pega o índice do slide atual
-                const currentSlide = lg.getSlideItem(index); // Pega o elemento do slide
-                // Procura por um elemento de vídeo dentro do slide atual
-                const videoElement = currentSlide.querySelector('.lg-video-object');
-
-                // Se encontrar um vídeo, força o play
-                if (videoElement) {
-                    videoElement.play();
-                }
-            });
+            // O script customizado de 'play' foi removido, pois o HTML agora cuida disso.
         {% endfor %}
     });
 </script>
