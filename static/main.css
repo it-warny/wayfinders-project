@@ -33,21 +33,27 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .timeline-item .card { background-color: rgba(30, 30, 30, 0.9) !important; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); max-width: 350px; }
 .timeline-item.left .card { margin-right: 60px; float: right; }
 .timeline-item.right .card { margin-left: 50px; float: left; }
-.timeline-item .card-img-top { cursor: pointer; }
+/* ALTERAÇÃO ABAIXO para padronizar altura dos cards */
+.timeline-item .card-img-top {
+    cursor: pointer;
+    height: 250px; /* NOVO: Altura fixa para a imagem */
+    object-fit: cover; /* NOVO: Garante que a imagem cubra o espaço sem distorcer */
+}
 .timeline-item .card-body { padding: 1rem 1.25rem; }
 .timeline-item .card-title { margin-bottom: 0; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .timeline-item .card-footer { background-color: transparent; border-top: 1px solid rgba(255,255,255,0.1); }
 
 /* --- Estilos para o Modal de Mídia (Bootstrap) --- */
-/* NOVO: Regra para fazer o modal ocupar mais espaço na tela */
+/* ALTERAÇÃO ABAIXO para o modal ficar maior */
 .media-modal .modal-dialog {
-    max-width: 95%;
-    margin: 1.75rem auto;
+    max-width: 98vw; /* Ocupa quase toda a largura da tela */
+    width: 98vw;
+    margin: 1vh auto; /* Margem vertical mínima */
 }
 .media-modal .modal-content {
     background-color: rgba(30, 30, 30, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    height: 90vh;
+    height: 95vh;
     display: flex;
     flex-direction: column;
 }
@@ -118,7 +124,6 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
     .timeline-item.left .card, .timeline-item.right .card { margin: 0; float: none; }
     .timeline-item.right { left: 0%; }
     .login-container { width: 90vw; height: 90vw; }
-    /* NOVO: Ajuste para o modal em telas pequenas */
     .media-modal .modal-dialog {
         max-width: 100%;
         margin: 0;
