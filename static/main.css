@@ -41,12 +41,10 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 /* --- Estilos para o Modal de Mídia (Bootstrap) --- */
 .media-modal .modal-content {
     background-color: rgba(30, 30, 30, 0.95);
-    backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    /* NOVO: Define um layout flexível e altura máxima para o modal */
+    height: 90vh; /* Ocupa 90% da altura da tela */
     display: flex;
     flex-direction: column;
-    height: 95vh;
 }
 .media-modal .modal-header {
     border-color: rgba(255, 255, 255, 0.2);
@@ -57,31 +55,23 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
     text-align: center;
     padding-left: 30px;
 }
-.media-modal .modal-footer {
-    border-color: rgba(255, 255, 255, 0.2);
-}
 .media-modal .modal-body {
     padding: 0;
-    /* NOVO: Faz o corpo do modal (a mídia) ocupar o espaço restante */
-    flex-grow: 1;
-    overflow: hidden; /* Garante que a mídia não estoure o container */
-    display: flex; /* Centraliza a mídia dentro do corpo */
-    align-items: center;
-    justify-content: center;
+    flex-grow: 1; /* Ocupa todo o espaço vertical restante */
+    min-height: 0; /* Previne bugs de overflow com flexbox */
 }
-.media-modal .carousel {
-    height: 100%; /* Faz o carrossel ocupar toda a altura do modal-body */
-    width: 100%;
-}
-.media-modal .carousel-inner, .media-modal .carousel-item {
+.media-modal .carousel, .media-modal .carousel-inner, .media-modal .carousel-item {
     height: 100%;
 }
 .media-modal .carousel-item img,
 .media-modal .carousel-item video {
-    /* ALTERADO: Altura e largura 100% para preencher o espaço flexível */
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Garante que a mídia não seja distorcida */
+    object-fit: contain; /* Garante que a mídia apareça inteira, sem distorcer */
+}
+.media-modal .modal-footer {
+    border-color: rgba(255, 255, 255, 0.2);
+    flex-shrink: 0; /* Impede que o rodapé encolha */
 }
 .media-modal .close {
     color: #dc3545 !important;

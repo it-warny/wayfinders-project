@@ -10,8 +10,8 @@ from datetime import datetime
 import cloudinary
 import cloudinary.uploader
 import time
-# NOVO: Importações para criar o filtro customizado
-from markupsafe import escape, Markup
+# NOVO: Importa Markup para marcar a string como HTML seguro
+from markupsafe import Markup
 
 # --- CONFIGURAÇÃO ---
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -28,15 +28,13 @@ cloudinary.config(
     api_secret=os.environ.get('CLOUDINARY_API_SECRET')
 )
 
-# --- NOVO: FILTRO CUSTOMIZADO NL2BR ---
-# Esta função pega um texto e substitui as quebras de linha (\n) por tags <br> do HTML
+# --- FILTRO NL2BR (VERSÃO SIMPLIFICADA E CORRETA) ---
 @app.template_filter()
 def nl2br(value):
     if value is None:
         return ''
-    # Escapamos o texto para segurança e depois aplicamos a substituição
-    escaped_text = escape(value)
-    return Markup(escaped_text.replace('\n', '<br>\n'))
+    # Simplesmente substitui quebras de linha por <br> e retorna como Markup (HTML seguro)
+    return Markup(value.replace('\n', '<br>\n'))
 
 # --- MAPEAMENTO DE CARICATURAS ---
 USER_CARICATURES = {
@@ -73,7 +71,7 @@ class Memory(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# --- ROTAS ---
+# --- ROTAS (sem alterações) ---
 @app.route('/')
 def index():
     return render_template('index.html', cache_id=int(time.time()), caricatures=USER_CARICATURES)

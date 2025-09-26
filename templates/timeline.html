@@ -36,7 +36,6 @@
                 </div>
             </div>
 
-            <!-- MODAL DO BOOTSTRAP COM CARROSSEL PARA TODAS AS MÍDIAS -->
             {% if memory.media_items %}
                 <div class="modal fade media-modal" id="mediaModal-{{ memory.id }}" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -75,8 +74,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-start">
-                                <!-- CORREÇÃO ABAIXO: Adicionado o filtro | safe -->
-                                <p class="text-left w-100">{{ memory.description | nl2br | safe }}</p>
+                                <p class="text-left w-100">{{ memory.description | nl2br }}</p>
                             </div>
                         </div>
                     </div>
