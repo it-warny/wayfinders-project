@@ -16,25 +16,18 @@
                 <div class="gallery-container" id="gallery-{{ memory.id }}">
                     {% if memory.media_items %}
                         {% for item in memory.media_items %}
-                            {% if item.media_type == 'video' %}
-                                <a href="{{ item.url }}"
-                                   data-sub-html="<p>{{ memory.description | nl2br }}</p>"
-                                   {% if loop.index > 1 %}style="display:none;"{% endif %}>
+                            <a href="{{ item.url }}"
+                               data-sub-html="<p>{{ memory.description | nl2br }}</p>"
+                               {% if loop.index > 1 %}style="display:none;"{% endif %}>
 
-                                    {% if loop.index == 1 %}
-                                        <img src="{{ item.url.replace('.mp4', '.jpg') }}" class="card-img-top" alt="Capa da memória em vídeo">
-                                    {% endif %}
-                                </a>
-                            {% else %}
-                                <a href="{{ item.url }}"
-                                   data-sub-html="<p>{{ memory.description | nl2br }}</p>"
-                                   {% if loop.index > 1 %}style="display:none;"{% endif %}>
-
-                                    {% if loop.index == 1 %}
+                                {% if loop.index == 1 %}
+                                    {% if item.media_type == 'video' %}
+                                        <img src="{{ item.url.replace('.mp4', '.jpg') }}" class="card-img-top" alt="Capa da memória">
+                                    {% else %}
                                         <img src="{{ item.url.replace('/upload/', '/upload/w_600,c_limit/') }}" class="card-img-top" alt="Capa da memória">
                                     {% endif %}
-                                </a>
-                            {% endif %}
+                                {% endif %}
+                            </a>
                         {% endfor %}
                     {% endif %}
                 </div>
@@ -60,15 +53,14 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Itera sobre cada container de galeria
         const galleryContainers = document.querySelectorAll('.gallery-container');
         galleryContainers.forEach(container => {
             lightGallery(container, {
-                // SCRIPT DE INICIALIZAÇÃO CORRIGIDO
-                plugins: [lgVideo],         // CORREÇÃO: Removido o 'lgZoom' que causava o erro
+                // Script Final e Estável
+                plugins: [lgVideo, lgZoom],
                 selector: 'a',
                 download: false,
-                zoom: false                 // Esta linha é a forma correta de desativar o zoom
+                zoom: false
             });
         });
     });
