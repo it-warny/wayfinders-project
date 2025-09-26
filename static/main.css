@@ -41,24 +41,19 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 /* --- GALERIA CUSTOMIZADA (LIGHTGALLERY) --- */
 .lg-backdrop { background-color: rgba(0, 0, 0, 0.8) !important; backdrop-filter: blur(5px); }
 .lg-toolbar { background-color: rgba(30, 30, 30, 0.85) !important; }
-/* ALTERAÇÕES FINAIS ABAIXO */
 .lg-sub-html {
     background-color: rgba(30, 30, 30, 0.85) !important;
     text-align: center !important;
-    padding: 10px 25px !important; /* Padding vertical reduzido */
-}
-.lg-sub-html h4 {
-    display: none; /* NOVO: Esconde o título (h4) completamente */
+    padding: 10px 25px !important;
 }
 .lg-sub-html p {
     color: #f8f9fa;
-    font-size: 0.85rem; /* Fonte ainda menor */
-    line-height: 1.5;   /* Altura da linha para cálculo */
+    font-size: 0.85rem;
+    line-height: 1.5;
     margin: 0 auto;
-    max-height: 4.5em;  /* NOVO: Limita a altura para no máximo 3 linhas (1.5 * 3) */
-    overflow: hidden;   /* NOVO: Esconde o texto que passar do limite, sem barra de rolagem */
+    max-height: 4.5em; /* Limita a altura para no máximo 3 linhas */
+    overflow: hidden;   /* Esconde o texto que passar do limite */
 }
-/* FIM DAS ALTERAÇÕES */
 .lg-next, .lg-prev { background-color: rgba(30, 30, 30, 0.7) !important; border-radius: 50%; }
 .lg-next:hover, .lg-prev:hover { background-color: rgba(255, 193, 7, 0.8) !important; color: #fff !important; }
 
