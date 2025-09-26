@@ -30,25 +30,26 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .timeline-container::after { content: ''; position: absolute; width: 6px; background-color: rgba(255, 255, 255, 0.2); top: 0; bottom: 0; left: 50%; margin-left: -3px; z-index: -1; }
 .timeline-item { padding: 10px 80px; position: relative; width: 50%; clear: both; float: left; }
 .timeline-item.right { float: right; }
-.timeline-item .card { background-color: rgba(30, 30, 30, 0.9) !important; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); max-width: 350px; }
-.timeline-item.left .card { margin-right: 60px; float: right; }
+/* ALTERADO: Largura máxima do card aumentada */
+.timeline-item .card { background-color: rgba(30, 30, 30, 0.9) !important; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); max-width: 400px; }
+/* ALTERADO: Margem da esquerda aumentada para afastar o card */
+.timeline-item.left .card { margin-right: 80px; float: right; }
 .timeline-item.right .card { margin-left: 50px; float: left; }
-/* ALTERAÇÃO ABAIXO para padronizar altura dos cards */
+/* ALTERADO: Substituída altura fixa por proporção de tela para padronização */
 .timeline-item .card-img-top {
     cursor: pointer;
-    height: 250px; /* NOVO: Altura fixa para a imagem */
-    object-fit: cover; /* NOVO: Garante que a imagem cubra o espaço sem distorcer */
+    aspect-ratio: 4 / 3; /* Proporção de tela 4:3 */
+    object-fit: cover;   /* Garante que a imagem cubra o espaço sem distorcer */
 }
 .timeline-item .card-body { padding: 1rem 1.25rem; }
 .timeline-item .card-title { margin-bottom: 0; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .timeline-item .card-footer { background-color: transparent; border-top: 1px solid rgba(255,255,255,0.1); }
 
 /* --- Estilos para o Modal de Mídia (Bootstrap) --- */
-/* ALTERAÇÃO ABAIXO para o modal ficar maior */
 .media-modal .modal-dialog {
-    max-width: 98vw; /* Ocupa quase toda a largura da tela */
+    max-width: 98vw;
     width: 98vw;
-    margin: 1vh auto; /* Margem vertical mínima */
+    margin: 1vh auto;
 }
 .media-modal .modal-content {
     background-color: rgba(30, 30, 30, 0.95);
