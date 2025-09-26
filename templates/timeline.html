@@ -57,10 +57,9 @@
         galleryContainers.forEach(container => {
             lightGallery(container, {
                 // Script Final e Estável
-                plugins: [lgVideo, lgZoom],
+                plugins: [lgVideo], // Carrega apenas o plugin de vídeo
                 selector: 'a',
-                download: false,
-                zoom: false
+                download: false
             });
         });
     });
