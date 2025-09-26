@@ -43,32 +43,48 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
     background-color: rgba(30, 30, 30, 0.95);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    /* NOVO: Define um layout flexível e altura máxima para o modal */
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
 }
 .media-modal .modal-header {
     border-color: rgba(255, 255, 255, 0.2);
-    align-items: center; /* NOVO: Alinha verticalmente o título e o botão X */
+    align-items: center;
 }
-/* NOVO: Regra para centralizar o título */
 .media-modal .modal-title {
     flex-grow: 1;
     text-align: center;
-    padding-left: 30px; /* Compensa o espaço do botão X para a centralização ficar perfeita */
+    padding-left: 30px;
 }
 .media-modal .modal-footer {
     border-color: rgba(255, 255, 255, 0.2);
 }
 .media-modal .modal-body {
     padding: 0;
+    /* NOVO: Faz o corpo do modal (a mídia) ocupar o espaço restante */
+    flex-grow: 1;
+    overflow: hidden; /* Garante que a mídia não estoure o container */
+    display: flex; /* Centraliza a mídia dentro do corpo */
+    align-items: center;
+    justify-content: center;
+}
+.media-modal .carousel {
+    height: 100%; /* Faz o carrossel ocupar toda a altura do modal-body */
+    width: 100%;
+}
+.media-modal .carousel-inner, .media-modal .carousel-item {
+    height: 100%;
 }
 .media-modal .carousel-item img,
 .media-modal .carousel-item video {
-    max-height: 80vh;
+    /* ALTERADO: Altura e largura 100% para preencher o espaço flexível */
     width: 100%;
-    height: auto;
-    object-fit: contain;
+    height: 100%;
+    object-fit: contain; /* Garante que a mídia não seja distorcida */
 }
 .media-modal .close {
-    color: #dc3545 !important; /* ALTERADO: Cor vermelha para o X */
+    color: #dc3545 !important;
     opacity: 0.9 !important;
     text-shadow: none;
 }
