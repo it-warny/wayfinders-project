@@ -38,15 +38,23 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .timeline-item .card-title { margin-bottom: 0; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .timeline-item .card-footer { background-color: transparent; border-top: 1px solid rgba(255,255,255,0.1); }
 
-/* --- SEÇÃO DA LIGHTGALLERY REMOVIDA --- */
-
-/* NOVO: Estilos para o Modal de Mídia (Bootstrap) */
+/* --- Estilos para o Modal de Mídia (Bootstrap) --- */
 .media-modal .modal-content {
     background-color: rgba(30, 30, 30, 0.95);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
-.media-modal .modal-header, .media-modal .modal-footer {
+.media-modal .modal-header {
+    border-color: rgba(255, 255, 255, 0.2);
+    align-items: center; /* NOVO: Alinha verticalmente o título e o botão X */
+}
+/* NOVO: Regra para centralizar o título */
+.media-modal .modal-title {
+    flex-grow: 1;
+    text-align: center;
+    padding-left: 30px; /* Compensa o espaço do botão X para a centralização ficar perfeita */
+}
+.media-modal .modal-footer {
     border-color: rgba(255, 255, 255, 0.2);
 }
 .media-modal .modal-body {
@@ -60,8 +68,8 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
     object-fit: contain;
 }
 .media-modal .close {
-    color: white;
-    opacity: 0.9;
+    color: #dc3545 !important; /* ALTERADO: Cor vermelha para o X */
+    opacity: 0.9 !important;
     text-shadow: none;
 }
 .media-modal .carousel-control-prev-icon,
