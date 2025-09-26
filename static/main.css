@@ -39,10 +39,15 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .timeline-item .card-footer { background-color: transparent; border-top: 1px solid rgba(255,255,255,0.1); }
 
 /* --- Estilos para o Modal de Mídia (Bootstrap) --- */
+/* NOVO: Regra para fazer o modal ocupar mais espaço na tela */
+.media-modal .modal-dialog {
+    max-width: 95%;
+    margin: 1.75rem auto;
+}
 .media-modal .modal-content {
     background-color: rgba(30, 30, 30, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    height: 90vh; /* Ocupa 90% da altura da tela */
+    height: 90vh;
     display: flex;
     flex-direction: column;
 }
@@ -57,8 +62,8 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 }
 .media-modal .modal-body {
     padding: 0;
-    flex-grow: 1; /* Ocupa todo o espaço vertical restante */
-    min-height: 0; /* Previne bugs de overflow com flexbox */
+    flex-grow: 1;
+    min-height: 0;
 }
 .media-modal .carousel, .media-modal .carousel-inner, .media-modal .carousel-item {
     height: 100%;
@@ -67,11 +72,11 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
 .media-modal .carousel-item video {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Garante que a mídia apareça inteira, sem distorcer */
+    object-fit: contain;
 }
 .media-modal .modal-footer {
     border-color: rgba(255, 255, 255, 0.2);
-    flex-shrink: 0; /* Impede que o rodapé encolha */
+    flex-shrink: 0;
 }
 .media-modal .close {
     color: #dc3545 !important;
@@ -113,6 +118,15 @@ body { font-family: 'Poppins', sans-serif; background-image: url('images/backgro
     .timeline-item.left .card, .timeline-item.right .card { margin: 0; float: none; }
     .timeline-item.right { left: 0%; }
     .login-container { width: 90vw; height: 90vw; }
+    /* NOVO: Ajuste para o modal em telas pequenas */
+    .media-modal .modal-dialog {
+        max-width: 100%;
+        margin: 0;
+    }
+    .media-modal .modal-content {
+        height: 100vh;
+        border-radius: 0;
+    }
 }
 
 @media screen and (min-width: 1800px) {
